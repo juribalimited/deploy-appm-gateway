@@ -18,7 +18,7 @@
             },
             {
                 "name": "Virtual Network Address Space",
-                "type": "Microsoft.Network.VirtualNetworks",
+                "type": "Microsoft.Common.TextBox",
                 "label": "Virtual Network Address Space",
                 "toolTip": "Defines the IP range of your virtual network. This should be in CIDR notation, for example 10.0.0.0/22",
                 "defaultValue": "10.0.0.0/22",
@@ -43,7 +43,7 @@
             },
             {
                 "name": "Guest VM Subnet Range",
-                "type": "Microsoft.Network.VirtualNetworks",
+                "type": "Microsoft.Common.TextBox",
                 "label": "Guest VM Subnet Range",
                 "toolTip": "Defines the network address subnet which Guest VM's will be attached to. This should be in CIDR notation, for example 10.0.0.0/24",
                 "defaultValue": "10.0.0.0/24",
@@ -68,7 +68,7 @@
             },
             {
                 "name": "Container Subnet Range",
-                "type": "Microsoft.Network.VirtualNetworks",
+                "type": "Microsoft.Common.TextBox",
                 "label": "Container Subnet Range",
                 "toolTip": "Defines the network address subnet which gateway container will be attached to. This should be in CIDR notation, for example 10.0.1.0/24",
                 "defaultValue": "10.0.1.0/24",
@@ -93,7 +93,7 @@
             },
             {
                 "name": "Web App Subnet Range",
-                "type": "Microsoft.Network.VirtualNetworks",
+                "type": "Microsoft.Common.TextBox",
                 "label": "Web App Subnet Range",
                 "toolTip": "Defines the network address subnet where the webapp will reside. This should be in CIDR notation, for example 10.0.2.0/24",
                 "defaultValue": "10.0.2.0/24",
@@ -211,7 +211,7 @@
                     },
                     {
                         "name": "APPM_PASSWORD",
-                        "type": "Microsoft.Common.PasswordBox",
+                        "type": "Microsoft.Common.TextBox",
                         "label": "APPM_PASSWORD",
                         "toolTip": "Value from AppM application to be used in Gateway container",
                         "constraints": {
@@ -222,7 +222,7 @@
                     },
                     {
                         "name": "APPM_HEXKEY",
-                        "type": "Microsoft.Common.PasswordBox",
+                        "type": "Microsoft.Common.TextBox",
                         "label": "APPM_HEXKEY",
                         "toolTip": "Value from AppM application to be used in Gateway container",
                         "constraints": {
@@ -233,7 +233,7 @@
                     },
                     {
                         "name": "APPM_HEXIV",
-                        "type": "Microsoft.Common.PasswordBox",
+                        "type": "Microsoft.Common.TextBox",
                         "label": "APPM_HEXIV",
                         "toolTip": "Value from AppM application to be used in Gateway container",
                         "constraints": {
