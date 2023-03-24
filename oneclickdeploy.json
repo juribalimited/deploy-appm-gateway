@@ -1,0 +1,405 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "Virtual Network Name": {
+            "type": "String",
+            "defaultValue": "appm-client-vnet",
+            "metadata": {
+              "description": "Defines the name of your virtual network"
+            }
+        },
+        "Virtual Network Address Space": {
+            "type": "String",
+            "defaultValue": "10.0.0.0/16",
+            "metadata": {
+              "description": "Defines the IP range of your virtual network. This should be in CIDR notation, for example 10.0.0.0/16"
+            }
+        },
+        "Guest VM Subnet Name": {
+            "type": "String",
+            "defaultValue": "guest-snet",
+            "metadata": {
+              "description": "Defines the name of the virtual network subnet where Guest VM's will be located"
+            }
+        },
+        "Guest VM Subnet Range": {
+            "type": "String",
+            "defaultValue": "10.0.0.0/24",
+            "metadata": {
+              "description": "Defines the network address subnet which Guest VM's will be attached to. This should be in CIDR notation, for example 10.0.0.0/24"
+            }
+        },
+        "Container Subnet Name": {
+            "type": "String",
+            "defaultValue": "container-snet",
+            "metadata": {
+              "description": "Defines the name of the virtual network subnet where the guacamole container will be located"
+            }
+        },
+        "Container Subnet Range": {
+            "type": "String",
+            "defaultValue": "10.0.1.0/24",
+            "metadata": {
+              "description": "Defines the network address subnet which gateway container will be attached to. This should be in CIDR notation, for example 10.0.1.0/24"
+            }
+        },
+        "Web App Subnet Name": {
+          "type": "String",
+          "defaultValue": "webapp-snet",
+          "metadata": {
+            "description": "Defines the name of the virtual network subnet where the webapp will be located"
+          }
+        },
+        "Web App Subnet Range": {
+          "type": "String",
+          "defaultValue": "10.0.2.0/24",
+          "metadata": {
+            "description": "Defines the network address subnet where the webapp will reside. This should be in CIDR notation, for example 10.0.2.0/24"
+          }
+        },
+        "Container Instance Name": {
+            "type": "String",
+            "defaultValue": "guacamole-ci",
+            "metadata": {
+              "description": "Defines the name for Guacamole gateway container"
+            }
+        },
+        "Container Restart Policy": {
+            "type": "string",
+            "defaultValue": "Always",
+            "allowedValues": [
+              "Always",
+              "Never",
+              "OnFailure"
+            ],
+            "metadata": {
+              "description": "The behavior of Azure runtime if gateway container has stopped. Defaults to Always restart."
+            }
+        },
+        "Gateway WebApp Name": {
+          "type": "String",
+          "defaultValue": "gateway",
+          "metadata": {
+            "description": "Defines the name for Azure gateway web app"
+          } 
+        },
+        "Gateway Network Security Group Name": {
+          "type": "String",
+          "defaultValue": "gateway-nsg",
+          "metadata": {
+            "description": "Defines the name for network security group used for Gateway WebApp"
+          } 
+        },
+
+        "Container Network Security Group Name": {
+          "type": "String",
+          "defaultValue": "container-nsg",
+          "metadata": {
+            "description": "Defines the name for network security group used for Container"
+          } 
+        },
+
+        "Gateway Image Name": {
+          "type": "String",
+          "defaultValue": "sha-d9174c1",
+          "metadata": {
+            "description": "Defines the image to be used for Gateway container. This will default to latest available. Full list can be found here https://hub.docker.com/repository/docker/juriba/appmgateway/general"
+          } 
+        },
+        "APPM_USERNAME": {
+          "type": "String",
+          "metadata": {
+            "description": "Value from AppM application to be used in Gateway container."
+          } 
+        },
+        "APPM_PASSWORD": {
+          "type": "String",
+          "metadata": {
+            "description": "Value from AppM application to be used in Gateway container."
+          } 
+        },  
+        "APPM_HEXKEY": {
+          "type": "String",
+          "metadata": {
+            "description": "Value from AppM application to be used in Gateway container."
+          } 
+        },  
+        "APPM_HEXIV": {
+          "type": "String",
+          "metadata": {
+            "description": "Value from AppM application to be used in Gateway container."
+          } 
+        }
+    },
+    "variables": {
+        "containerSubnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('Virtual Network Name'), parameters('Container Subnet Name'))]",
+        "gatewaySubnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('Virtual Network Name'), parameters('Web App Subnet Name'))]",
+        "webAppPortalName": "[concat(parameters('Gateway WebApp Name'), '-app')]",
+        "appServicePlanName": "[concat(parameters('Gateway WebApp Name'), '-asp')]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Network/VirtualNetworks",
+            "apiVersion": "2021-01-01",
+            "name": "[parameters('Virtual Network Name')]",
+            "location": "[ResourceGroup().location]",
+            "dependsOn": [
+              "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('Gateway Network Security Group Name'))]",
+              "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('Container Network Security Group Name'))]"
+            ],
+            "tags": {},
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('Virtual Network Address Space')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[parameters('Guest VM Subnet Name')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('Guest VM Subnet Range')]"
+                        }
+                    },
+                    {
+                        "name": "[parameters('Container Subnet Name')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('Container Subnet Range')]",
+                            "networkSecurityGroup": {
+                              "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('Container Network Security Group Name'))]"
+                            },
+                        "delegations": [
+                          {
+                            "name": "container",
+                            "properties": {
+                              "serviceName": "Microsoft.ContainerInstance/containerGroups"
+                            }
+                          }
+                        ]
+                        }
+                    },
+
+                    {
+                      "name": "[parameters('Web App Subnet Name')]",
+                      "properties": {
+                          "addressPrefix": "[parameters('Web App Subnet Range')]",
+                          "networkSecurityGroup": {
+                            "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('Gateway Network Security Group Name'))]"
+                          },
+                      "delegations": [
+                        {
+                          "name": "webapp",
+                          "properties": {
+                            "serviceName": "Microsoft.Web/serverfarms"
+                          }
+                        }
+                      ]
+                      }
+                  }
+
+                ]
+            }
+        },       
+        {
+          "type": "Microsoft.Network/networkSecurityGroups",
+          "apiVersion": "2022-07-01",
+          "name": "[parameters('Gateway Network Security Group Name')]",
+          "location": "[ResourceGroup().location]",
+          "dependsOn": [],
+          "properties": {
+              "securityRules": [
+                  {
+                      "name": "GUACD_Outbound",
+                      "id": "[resourceId('Microsoft.Network/networkSecurityGroups/securityRules', parameters('Gateway Network Security Group Name'), 'GUACD_Outbound')]",
+                      "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+                      "properties": {
+                          "protocol": "*",
+                          "sourcePortRange": "*",
+                          "destinationPortRange": "4822",
+                          "sourceAddressPrefix": "*",
+                          "destinationAddressPrefix": "[parameters('Container Subnet Range')]",
+                          "access": "Allow",
+                          "priority": 100,
+                          "direction": "Outbound",
+                          "sourcePortRanges": [],
+                          "destinationPortRanges": [],
+                          "sourceAddressPrefixes": [],
+                          "destinationAddressPrefixes": []
+                      }
+                  },
+                  {
+                      "name": "DENY_Outbound",
+                      "id": "[resourceId('Microsoft.Network/networkSecurityGroups/securityRules', parameters('Gateway Network Security Group Name'), 'DENY_Outbound')]",
+                      "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+                      "properties": {
+                          "protocol": "*",
+                          "sourcePortRange": "*",
+                          "destinationPortRange": "*",
+                          "sourceAddressPrefix": "*",
+                          "destinationAddressPrefix": "*",
+                          "access": "Deny",
+                          "priority": 110,
+                          "direction": "Outbound",
+                          "sourcePortRanges": [],
+                          "destinationPortRanges": [],
+                          "sourceAddressPrefixes": [],
+                          "destinationAddressPrefixes": []
+                      }
+                  }
+              ]
+          }
+        },
+
+        {
+          "type": "Microsoft.Network/networkSecurityGroups",
+          "apiVersion": "2022-07-01",
+          "name": "[parameters('Container Network Security Group Name')]",
+          "location": "[ResourceGroup().location]",
+          "dependsOn": [],
+          "properties": {
+            "securityRules": [
+                {
+                    "name": "guacdInbound",
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups/securityRules', parameters('Container Network Security Group Name'), 'guacdInbound')]",
+                    "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+                    "properties": {
+                        "protocol": "*",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "4822",
+                        "sourceAddressPrefix": "10.3.11.0/24",
+                        "destinationAddressPrefix": "10.3.254.0/24",
+                        "access": "Allow",
+                        "priority": 110,
+                        "direction": "Inbound",
+                        "sourcePortRanges": [],
+                        "destinationPortRanges": [],
+                        "sourceAddressPrefixes": [],
+                        "destinationAddressPrefixes": []
+                    }
+                }
+            ]
+        }
+        },
+
+
+        {
+          "type": "Microsoft.Web/serverfarms",
+          "apiVersion": "2021-02-01",
+          "name": "[variables('appServicePlanName')]",
+          "location": "[ResourceGroup().location]",
+          "sku": {
+            "name":"B2",
+            "size":"Y1",
+            "tier":"Basic"
+          },
+          "kind": "linux",
+          "properties": {
+            "reserved": true
+          }
+        },
+        {
+          "type": "Microsoft.Web/sites",
+          "apiVersion": "2021-03-01",
+          "name": "[variables('webAppPortalName')]",
+          "location": "[ResourceGroup().location]",
+          "kind": "app,linux,container",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]"
+          ],
+          "properties": {
+            "name": "[variables('webAppPortalName')]",
+            "http20Enabled": true,
+            "httpsOnly": true,
+            "virtualNetworkSubnetId":"[variables('gatewaySubnetRef')]",
+            "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
+            "siteConfig": {
+              "linuxFxVersion": "[concat ('DOCKER|juriba/appmgateway:', parameters('Gateway Image Name'))]",
+              "alwaysOn": true,
+              "http20Enabled": true,
+              "minTlsVersion": "1.2",
+              "healthCheckPath": "/vnc/",
+              "ftpsState": "Disabled",
+              "appSettings": [
+                {
+                  "name": "WEBSITES_ENABLE_APP_SERVICE_STORAGE",
+                  "value": "false"
+                },
+                {
+                  "name": "APPM_USERNAME",
+                  "value": "[parameters('APPM_USERNAME')]"
+                },
+                {
+                  "name": "APPM_PASSWORD",
+                  "value": "[parameters('APPM_PASSWORD')]"
+                },
+                {
+                  "name": "APPM_HEXKEY",
+                  "value": "[parameters('APPM_HEXKEY')]"
+                },
+                {
+                  "name": "APPM_HEXIV",
+                  "value": "[parameters('APPM_HEXIV')]"
+                }
+              ]
+            }
+          },
+          "identity": {
+            "type": "SystemAssigned"
+          }
+        },
+        {
+            "type": "Microsoft.ContainerInstance/containerGroups",
+            "apiVersion": "2021-09-01",
+            "name": "[parameters('Container Instance Name')]", 
+            "location": "[ResourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks/', parameters('Virtual Network Name'))]"
+            ],          
+            "properties": {
+              "containers": [
+                {
+                  "name": "guacamole",
+                  "properties": {
+                    "image": "guacamole/guacd:1.4.0",
+                    "ports": [
+                      {
+                        "port": "4822",
+                        "protocol": "TCP"
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "cpu": "1",
+                        "memoryInGB": "1.5"
+                      }
+                    }
+                  }
+                }
+              ],
+              "osType": "Linux",
+              "subnetIds": [
+                {
+                  "id": "[variables('containerSubnetRef')]"
+                }
+              ],
+              "restartPolicy": "[parameters('Container Restart Policy')]",
+              "ipAddress": {
+                "type": "Private",
+                "ports": [
+                  {
+                    "port": "4822",
+                    "protocol": "TCP"
+                  }
+                ]
+              }
+            }
+          }
+    ],
+    "outputs": {
+        "containerIPv4Address": {
+          "type": "string",
+          "value": "[reference(resourceId('Microsoft.ContainerInstance/containerGroups', parameters('Container Instance Name'))).ipAddress.ip]"
+        }
+      }
+}
