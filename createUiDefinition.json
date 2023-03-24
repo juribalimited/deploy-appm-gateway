@@ -18,7 +18,7 @@
             },
             {
                 "name": "Virtual Network Address Space",
-                "type": "Microsoft.Network.VirtualNetwork",
+                "type": "Microsoft.Network.VirtualNetworks",
                 "label": "Virtual Network Address Space",
                 "toolTip": "Defines the IP range of your virtual network. This should be in CIDR notation, for example 10.0.0.0/22",
                 "defaultValue": "10.0.0.0/22",
@@ -42,9 +42,8 @@
                 }
             },
             {
-
                 "name": "Guest VM Subnet Range",
-                "type": "Microsoft.Network.VirtualNetwork",
+                "type": "Microsoft.Network.VirtualNetworks",
                 "label": "Guest VM Subnet Range",
                 "toolTip": "Defines the network address subnet which Guest VM's will be attached to. This should be in CIDR notation, for example 10.0.0.0/24",
                 "defaultValue": "10.0.0.0/24",
@@ -68,8 +67,8 @@
                 }
             },
             {
-                "Container Subnet Range": "Guest VM Subnet Range",
-                "type": "Microsoft.Network.VirtualNetwork",
+                "name": "Container Subnet Range",
+                "type": "Microsoft.Network.VirtualNetworks",
                 "label": "Container Subnet Range",
                 "toolTip": "Defines the network address subnet which gateway container will be attached to. This should be in CIDR notation, for example 10.0.1.0/24",
                 "defaultValue": "10.0.1.0/24",
@@ -93,8 +92,8 @@
                 }
             },
             {
-                "Container Subnet Range": "Web App Subnet Range",
-                "type": "Microsoft.Network.VirtualNetwork",
+                "name": "Web App Subnet Range",
+                "type": "Microsoft.Network.VirtualNetworks",
                 "label": "Web App Subnet Range",
                 "toolTip": "Defines the network address subnet where the webapp will reside. This should be in CIDR notation, for example 10.0.2.0/24",
                 "defaultValue": "10.0.2.0/24",
