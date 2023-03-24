@@ -11,9 +11,9 @@
         },
         "Virtual Network Address Space": {
             "type": "String",
-            "defaultValue": "10.0.0.0/16",
+            "defaultValue": "10.0.0.0/22",
             "metadata": {
-              "description": "Defines the IP range of your virtual network. This should be in CIDR notation, for example 10.0.0.0/16"
+              "description": "Defines the IP range of your virtual network. This should be in CIDR notation, for example 10.0.0.0/22"
             }
         },
         "Guest VM Subnet Name": {
@@ -114,19 +114,19 @@
           } 
         },
         "APPM_PASSWORD": {
-          "type": "String",
+          "type": "securestring",
           "metadata": {
             "description": "Value from AppM application to be used in Gateway container."
           } 
         },  
         "APPM_HEXKEY": {
-          "type": "String",
+          "type": "securestring",
           "metadata": {
             "description": "Value from AppM application to be used in Gateway container."
           } 
         },  
         "APPM_HEXIV": {
-          "type": "String",
+          "type": "securestring",
           "metadata": {
             "description": "Value from AppM application to be used in Gateway container."
           } 
