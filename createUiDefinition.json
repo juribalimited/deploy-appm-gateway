@@ -5,11 +5,11 @@
     "parameters": {
         "basics": [
             {
-                "name": "Virtual Network Name",
+                "name": "virtualNetworkName",
                     "type": "Microsoft.Common.TextBox",
                     "label": "Virtual Network Name",
                     "toolTip": "The name of the virtual network",
-                    "defaultValue": "appm-client-vnetab",
+                    "defaultValue": "appm-client-vnet",
                     "constraints": {
                         "required": true,
                         "regex": "^[a-z0-9A-Z-]{3,40}$",
@@ -17,24 +17,21 @@
                     }
             },
             {
-                "name": "Virtual Network Address Space",
+                "name": "virtualNetworkAddressSpace",
                 "type": "Microsoft.Common.TextBox",
                 "label": "Virtual Network Address Space",
                 "toolTip": "Defines the IP range of your virtual network. This should be in CIDR notation, for example 10.0.0.0/22",
                 "defaultValue": "10.0.0.0/22",
                 "constraints": {
-                    "required": true,
-                    "minAddressPrefixSize": "/22",
-                    "minAddressCount": 12,
-                    "requireContiguousAddresses": false
+                    "required": true
                 }
             },
             {
-                "name": "Guest VM Subnet Name",
+                "name": "guestVMSubnetName",
                 "type": "Microsoft.Common.TextBox",
                 "label": "Guest VM Subnet Name",
                 "toolTip": "Defines the name of the virtual network subnet where Guest VM's will be located",
-                "defaultValue": "guest-snetaa",
+                "defaultValue": "guest-snet",
                 "constraints": {
                     "required": true,
                     "regex": "^[a-z0-9A-Z-]{3,40}$",
@@ -42,20 +39,17 @@
                 }
             },
             {
-                "name": "Guest VM Subnet Range",
+                "name": "guestVMSubnetRange",
                 "type": "Microsoft.Common.TextBox",
                 "label": "Guest VM Subnet Range",
                 "toolTip": "Defines the network address subnet which Guest VM's will be attached to. This should be in CIDR notation, for example 10.0.0.0/24",
                 "defaultValue": "10.0.0.0/24",
                 "constraints": {
-                    "required": true,
-                    "minAddressPrefixSize": "/24",
-                    "minAddressCount": 12,
-                    "requireContiguousAddresses": false
+                    "required": true
                 }
             },
             {
-                "name": "Container Subnet Name",
+                "name": "containerSubnetName",
                 "type": "Microsoft.Common.TextBox",
                 "label": "Container Subnet Name",
                 "toolTip": "Defines the name of the virtual network subnet where the guacamole container will be located",
@@ -67,20 +61,17 @@
                 }
             },
             {
-                "name": "Container Subnet Range",
+                "name": "containerSubnetRange",
                 "type": "Microsoft.Common.TextBox",
                 "label": "Container Subnet Range",
                 "toolTip": "Defines the network address subnet which gateway container will be attached to. This should be in CIDR notation, for example 10.0.1.0/24",
                 "defaultValue": "10.0.1.0/24",
                 "constraints": {
-                    "required": true,
-                    "minAddressPrefixSize": "/24",
-                    "minAddressCount": 12,
-                    "requireContiguousAddresses": false
+                    "required": true
                 }
             },
             {
-                "name": "Web App Subnet Name",
+                "name": "webAppSubnetName",
                 "type": "Microsoft.Common.TextBox",
                 "label": "Web App Subnet Name",
                 "toolTip": "Defines the name of the virtual network subnet where the webapp will be located",
@@ -92,20 +83,17 @@
                 }
             },
             {
-                "name": "Web App Subnet Range",
+                "name": "webAppSubnetRange",
                 "type": "Microsoft.Common.TextBox",
                 "label": "Web App Subnet Range",
                 "toolTip": "Defines the network address subnet where the webapp will reside. This should be in CIDR notation, for example 10.0.2.0/24",
                 "defaultValue": "10.0.2.0/24",
                 "constraints": {
-                    "required": true,
-                    "minAddressPrefixSize": "/24",
-                    "minAddressCount": 12,
-                    "requireContiguousAddresses": false
+                    "required": true
                 }
             },
             {
-                "name": "Container Instance Name",
+                "name": "containerInstanceName",
                 "type": "Microsoft.Common.TextBox",
                 "label": "Container Instance Name",
                 "toolTip": "Defines the name for Guacamole gateway container",
@@ -113,11 +101,11 @@
                 "constraints": {
                     "required": true,
                     "regex": "^[a-z0-9A-Z-]{3,40}$",
-                    "validationMessage": "The subnet name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."          
+                    "validationMessage": "The instance name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."          
                 }
             },
             {
-                "name": "Container Restart Policy",
+                "name": "containerRestartPolicy",
                 "type": "Microsoft.Common.DropDown",
                 "label": "Container Restart Policy",
                 "toolTip": "The behavior of Azure runtime if gateway container has stopped. Defaults to Always restart.",
@@ -140,7 +128,7 @@
                 }
             },
             {
-                "name": "Gateway WebApp Name",
+                "name": "gatewayWebAppName",
                 "type": "Microsoft.Common.TextBox",
                 "label": "Gateway WebApp Name",
                 "toolTip": "Defines the name for Azure gateway web app",
@@ -148,11 +136,11 @@
                 "constraints": {
                     "required": true,
                     "regex": "^[a-z0-9A-Z-]{3,40}$",
-                    "validationMessage": "The subnet name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."          
+                    "validationMessage": "The webapp name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."          
                 }
             },
             {
-                "name": "Gateway Network Security Group Name",
+                "name": "gatewayNetworkSecurityGroupName",
                 "type": "Microsoft.Common.TextBox",
                 "label": "Gateway Network Security Group Name",
                 "toolTip": "Defines the name for network security group used for Gateway WebApp",
@@ -160,11 +148,11 @@
                 "constraints": {
                     "required": true,
                     "regex": "^[a-z0-9A-Z-]{3,40}$",
-                    "validationMessage": "The subnet name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."          
+                    "validationMessage": "The security group name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."          
                 }
             },
             {
-                "name": "Container Network Security Group Name",
+                "name": "containerNetworkSecurityGroupName",
                 "type": "Microsoft.Common.TextBox",
                 "label": "Container Network Security Group Name",
                 "toolTip": "Defines the name for network security group used for Container",
@@ -172,11 +160,11 @@
                 "constraints": {
                     "required": true,
                     "regex": "^[a-z0-9A-Z-]{3,40}$",
-                    "validationMessage": "The subnet name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."          
+                    "validationMessage": "The security group name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."          
                 }
             },
             {
-                "name": "Gateway Image Name",
+                "name": "gatewayImageName",
                 "type": "Microsoft.Common.TextBox",
                 "label": "Gateway Image Name",
                 "toolTip": "Defines the image to be used for Gateway container. This will default to latest available. Full list can be found here https://hub.docker.com/repository/docker/juriba/appmgateway/general",
@@ -184,7 +172,7 @@
                 "constraints": {
                     "required": true,
                     "regex": "^[a-z0-9A-Z-]{3,20}$",
-                    "validationMessage": "The subnet name must be between 3 and 20 characters long and contain letters, numbers and hyphens only."          
+                    "validationMessage": "The image name must be between 3 and 20 characters long and contain letters, numbers and hyphens only."          
                 }
             }
         ],
@@ -192,10 +180,6 @@
             {
                 "name": "AppMConfig",
                 "label": "AppM Application Config",
-                "subLabel": {
-                    "preValidation": "Configure AppM Gateway settings",
-                    "postValidation": "Done"
-                },
                 "bladeTitle": "AppM Application Config",
                 "elements": [
                     {
@@ -246,6 +230,24 @@
             }
         ],
         "outputs": {
+            "virtualNetworkName": "[basics('virtualNetworkName')]",
+            "virtualNetworkAddressSpace": "[basics('virtualNetworkAddressSpace')]",
+            "guestVMSubnetName": "[basics('guestVMSubnetName')]",
+            "guestVMSubnetRange": "[basics('guestVMSubnetRange)]",
+            "Container Subnet Name": "[basics('containerSubnetName')]",
+            "Container Subnet Range": "[basics('containerSubnetRange')]",
+            "webAppSubnetName": "[basics('webAppSubnetName)]",
+            "webAppSubnetRange": "[basics('webAppSubnetRange')]",
+            "containerInstanceName": "[basics('containerInstanceName')]",
+            "containerRestartPolicy": "[basics('containerRestartPolicy')]",
+            "gatewayWebAppName": "[basics('gatewayWebAppName')]",
+            "gatewayNetworkSecurityGroupName": "[basics('gatewayNetworkSecurityGroupName')]",
+            "containerNetworkSecurityGroupName": "[basics('containerNetworkSecurityGroupName')]",
+            "gatewayImageName": "[basics('gatewayImageName')]",
+            "APPM_USERNAME": "[steps('APPM_USERNAME')]",
+            "APPM_PASSWORD": "[steps('APPM_PASSWORD')]",
+            "APPM_HEXKEY": "[steps('APPM_HEXKEY')]",
+            "APPM_HEXIV": "[steps('APPM_HEXIV')]"
         }
     }
 }
