@@ -178,9 +178,8 @@
         ],
         "steps": [
             {
-                "name": "AppMConfig",
-                "label": "AppM Application Config",
-                "bladeTitle": "AppM Application Config",
+                "name": "applicationConfig",
+                "label": "APPM Application Config",
                 "elements": [
                     {
                         "name": "APPM_USERNAME",
@@ -195,8 +194,11 @@
                     },
                     {
                         "name": "APPM_PASSWORD",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "APPM_PASSWORD",
+                        "type": "Microsoft.Common.PasswordBox",
+                        "label": {
+                            "password": "APPM_PASSWORD",
+                            "confirmPassword": "Confirm password"
+                        },
                         "toolTip": "Value from AppM application to be used in Gateway container",
                         "constraints": {
                             "required": true,
@@ -233,10 +235,10 @@
             "virtualNetworkName": "[basics('virtualNetworkName')]",
             "virtualNetworkAddressSpace": "[basics('virtualNetworkAddressSpace')]",
             "guestVMSubnetName": "[basics('guestVMSubnetName')]",
-            "guestVMSubnetRange": "[basics('guestVMSubnetRange)]",
-            "Container Subnet Name": "[basics('containerSubnetName')]",
-            "Container Subnet Range": "[basics('containerSubnetRange')]",
-            "webAppSubnetName": "[basics('webAppSubnetName)]",
+            "guestVMSubnetRange": "[basics('guestVMSubnetRange')]",
+            "containerSubnetName": "[basics('containerSubnetName')]",
+            "containerSubnetRange": "[basics('containerSubnetRange')]",
+            "webAppSubnetName": "[basics('webAppSubnetName')]",
             "webAppSubnetRange": "[basics('webAppSubnetRange')]",
             "containerInstanceName": "[basics('containerInstanceName')]",
             "containerRestartPolicy": "[basics('containerRestartPolicy')]",
@@ -244,10 +246,10 @@
             "gatewayNetworkSecurityGroupName": "[basics('gatewayNetworkSecurityGroupName')]",
             "containerNetworkSecurityGroupName": "[basics('containerNetworkSecurityGroupName')]",
             "gatewayImageName": "[basics('gatewayImageName')]",
-            "APPM_USERNAME": "[steps('APPM_USERNAME')]",
-            "APPM_PASSWORD": "[steps('APPM_PASSWORD')]",
-            "APPM_HEXKEY": "[steps('APPM_HEXKEY')]",
-            "APPM_HEXIV": "[steps('APPM_HEXIV')]"
+            "APPM_USERNAME": "[steps('applicationConfig').APPM_USERNAME]",
+            "APPM_PASSWORD": "[steps('applicationConfig').APPM_PASSWORD]",
+            "APPM_HEXKEY": "[steps('applicationConfig').APPM_HEXKEY]",
+            "APPM_HEXIV": "[steps('applicationConfig').APPM_HEXIV]"
         }
     }
 }
