@@ -1,5 +1,5 @@
 {
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "virtualNetworkNewOrExisting": {
@@ -14,7 +14,7 @@
           }
         },
         "virtualNetworkName": {
-            "type": "String",
+            "type": "string",
             "defaultValue": "appm-client-vnet",
             "metadata": {
               "description": "Defines the name of your virtual network"
@@ -30,49 +30,49 @@
           }
         },
         "guacamoleSubnetName": {
-            "type": "String",
+            "type": "string",
             "defaultValue": "container-snet",
             "metadata": {
               "description": "Defines the name of the virtual network subnet where the guacamole container will be located"
             }
         },
         "guacamoleSubnetAddressPrefix": {
-            "type": "String",
+            "type": "string",
             "defaultValue": "10.0.1.0/24",
             "metadata": {
               "description": "Defines the network address subnet which gateway container will be attached to. This should be in CIDR notation, for example 10.0.1.0/24"
             }
         },
         "gatewaySubnetName": {
-          "type": "String",
+          "type": "string",
           "defaultValue": "webapp-snet",
           "metadata": {
             "description": "Defines the name of the virtual network subnet where the webapp will be located"
           }
         },
         "gatewaySubnetAddressPrefix": {
-          "type": "String",
+          "type": "string",
           "defaultValue": "10.0.2.0/24",
           "metadata": {
             "description": "Defines the network address subnet where the webapp will reside. This should be in CIDR notation, for example 10.0.2.0/24"
           }
         },
         "guacamoleInstanceName": {
-            "type": "String",
+            "type": "string",
             "defaultValue": "guacamole-ci",
             "metadata": {
               "description": "Defines the name for Guacamole gateway container"
             }
         },
         "gatewayWebAppName": {
-          "type": "String",
+          "type": "string",
           "defaultValue": "appm-gateway",
           "metadata": {
             "description": "Defines the name for Azure gateway web app"
           } 
         },
         "gatewaySubnetNSGName": {
-          "type": "String",
+          "type": "string",
           "defaultValue": "gateway-nsg",
           "metadata": {
             "description": "Defines the name for network security group used for Gateway WebApp"
@@ -80,7 +80,7 @@
         },
 
         "guacamoleSubnetNSGName": {
-          "type": "String",
+          "type": "string",
           "defaultValue": "container-nsg",
           "metadata": {
             "description": "Defines the name for network security group used for Container"
@@ -88,14 +88,14 @@
         },
 
         "gatewayImageName": {
-          "type": "String",
+          "type": "string",
           "defaultValue": "sha-d9174c1",
           "metadata": {
             "description": "Defines the image to be used for Gateway container. This will default to latest available. Full list can be found here https://hub.docker.com/repository/docker/juriba/appmgateway/general"
           } 
         },
         "diagnosticUsername": {
-          "type": "String",
+          "type": "string",
           "metadata": {
             "description": "Value from AppM application to be used in Gateway container."
           } 
@@ -122,8 +122,8 @@
     "resources": [
         {
             "condition": "[equals(parameters('virtualNetworkNewOrExisting'), 'new')]",
-            "type": "Microsoft.Network/VirtualNetworks",
-            "apiVersion": "2021-01-01",
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2022-09-01",
             "name": "[parameters('virtualNetworkName')]",
             "location": "[ResourceGroup().location]",
             "dependsOn": [
@@ -177,7 +177,7 @@
         },       
         {
           "type": "Microsoft.Network/networkSecurityGroups",
-          "apiVersion": "2022-07-01",
+          "apiVersion": "2022-09-01",
           "name": "[parameters('gatewaySubnetNSGName')]",
           "location": "[ResourceGroup().location]",
           "dependsOn": [],
@@ -227,7 +227,7 @@
 
         {
           "type": "Microsoft.Network/networkSecurityGroups",
-          "apiVersion": "2022-07-01",
+          "apiVersion": "2022-09-01",
           "name": "[parameters('guacamoleSubnetNSGName')]",
           "location": "[ResourceGroup().location]",
           "dependsOn": [],
@@ -259,7 +259,7 @@
 
         {
           "type": "Microsoft.Web/serverfarms",
-          "apiVersion": "2021-02-01",
+          "apiVersion": "2022-09-01",
           "name": "[variables('appServicePlanName')]",
           "location": "[ResourceGroup().location]",
           "sku": {
@@ -274,7 +274,7 @@
         },
         {
           "type": "Microsoft.Web/sites",
-          "apiVersion": "2021-03-01",
+          "apiVersion": "2022-09-01",
           "name": "[variables('webAppPortalName')]",
           "location": "[ResourceGroup().location]",
           "kind": "app,linux,container",
@@ -320,7 +320,7 @@
         },
         {
             "type": "Microsoft.ContainerInstance/containerGroups",
-            "apiVersion": "2021-09-01",
+            "apiVersion": "2022-09-01",
             "name": "[parameters('guacamoleInstanceName')]", 
             "location": "[ResourceGroup().location]",
             "dependsOn": [
@@ -334,14 +334,14 @@
                     "image": "guacamole/guacd:1.4.0",
                     "ports": [
                       {
-                        "port": "4822",
+                        "port": 4822,
                         "protocol": "TCP"
                       }
                     ],
                     "resources": {
                       "requests": {
-                        "cpu": "1",
-                        "memoryInGB": "1.5"
+                        "cpu": 1,
+                        "memoryInGB": 1.5
                       }
                     }
                   }
@@ -358,7 +358,7 @@
                 "type": "Private",
                 "ports": [
                   {
-                    "port": "4822",
+                    "port": 4822,
                     "protocol": "TCP"
                   }
                 ]
