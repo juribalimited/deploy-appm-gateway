@@ -69,7 +69,7 @@
                     {
                         "name": "nsgSection",
                         "type": "Microsoft.Common.Section",
-                        "label": "Network Security Groups",
+                        "label": "Network security groups",
                         "elements": [
                             {
                                 "name": "gatewaySubnetNSGName",
