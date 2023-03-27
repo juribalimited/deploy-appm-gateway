@@ -11,6 +11,7 @@
                 "elements": [
                     {
                         "name": "networkSection",
+                        "label": "",
                         "type": "Microsoft.Common.Section",
                         "elements": [
                             {
@@ -36,9 +37,9 @@
                                 },
                                 "subnets": {
                                     "gatewaySubnet": {
-                                        "label": "Desktop Gateway subnet",
+                                        "label": "Gateway subnet",
                                         "defaultValue": {
-                                            "name": "subnet-1",
+                                            "name": "gateway-subnet",
                                             "addressPrefixSize": "/24"
                                         },
                                         "constraints": {
@@ -48,9 +49,9 @@
                                         }
                                     },
                                     "guacamoleSubnet": {
-                                        "label": "Apache Guacamole subnet",
+                                        "label": "Guacamole subnet",
                                         "defaultValue": {
-                                            "name": "subnet-2",
+                                            "name": "guacamole-subnet",
                                             "addressPrefixSize": "/26"
                                         },
                                         "constraints": {
@@ -68,14 +69,14 @@
                     {
                         "name": "nsgSection",
                         "type": "Microsoft.Common.Section",
-                        "label": "Example section",
+                        "label": "Network Security Groups",
                         "elements": [
                             {
                                 "name": "gatewaySubnetNSGName",
                                 "type": "Microsoft.Common.TextBox",
-                                "label": "Gateway Network Security Group Name",
-                                "toolTip": "Defines the name for network security group used for Gateway WebApp",
-                                "defaultValue": "gateway-nsg",
+                                "label": "Gateway Subnet NSG Name",
+                                "toolTip": "",
+                                "defaultValue": "gateway-subnet-nsg",
                                 "constraints": {
                                     "required": true,
                                     "regex": "^[a-z0-9A-Z-]{3,40}$",
@@ -85,9 +86,9 @@
                             {
                                 "name": "guacamoleSubnetNSGName",
                                 "type": "Microsoft.Common.TextBox",
-                                "label": "Container Network Security Group Name",
-                                "toolTip": "Defines the name for network security group used for Container",
-                                "defaultValue": "container-nsg",
+                                "label": "Guacamole Subnet NSG Name",
+                                "toolTip": "",
+                                "defaultValue": "container-subnet-nsg",
                                 "constraints": {
                                     "required": true,
                                     "regex": "^[a-z0-9A-Z-]{3,40}$",
@@ -106,13 +107,13 @@
                     {
                         "name": "containerSection",
                         "type": "Microsoft.Common.Section",
-                        "label": "Container settings",
+                        "label": "WebApp settings",
                         "elements": [
                             {
                                 "name": "gatewayWebAppName",
                                 "type": "Microsoft.Common.TextBox",
                                 "label": "Gateway WebApp Name",
-                                "toolTip": "Defines the name for Azure gateway web app",
+                                "toolTip": "",
                                 "defaultValue": "appm-gateway",
                                 "constraints": {
                                     "required": true,
@@ -122,15 +123,21 @@
                             },
                             {
                                 "name": "gatewayImageName",
-                                "type": "Microsoft.Common.TextBox",
-                                "label": "Gateway Image Name",
-                                "toolTip": "Defines the image to be used for Gateway container. This will default to latest available. Full list can be found here https://hub.docker.com/repository/docker/juriba/appmgateway/general",
-                                "defaultValue": "sha-d9174c1",
+                                "type": "Microsoft.Common.DropDown",
+                                "label": "AppM Version",
+                                "placeholder": "",
+                                "defaultValue": "Latest",
+                                "toolTip": "",
                                 "constraints": {
-                                    "required": true,
-                                    "regex": "^[a-z0-9A-Z-]{3,20}$",
-                                    "validationMessage": "The image name must be between 3 and 20 characters long and contain letters, numbers and hyphens only."          
-                                }
+                                    "allowedValues": [
+                                        {
+                                            "label": "Latest",
+                                            "value": "sha-d9174c1"
+                                        }
+                                    ],
+                                    "required": true
+                                },
+                                "visible": true
                             }
                         ],
                         "visible": true
@@ -164,7 +171,7 @@
                                 "name": "diagnosticUsername",
                                 "type": "Microsoft.Common.TextBox",
                                 "label": "Username",
-                                "toolTip": "Value from AppM application to be used in Gateway container",
+                                "toolTip": "",
                                 "constraints": {
                                     "required": true,
                                     "regex": "^[a-z0-9A-Z]{3,15}$",
@@ -178,7 +185,7 @@
                                     "password": "Password",
                                     "confirmPassword": "Confirm password"
                                 },
-                                "toolTip": "Value from AppM application to be used in Gateway container",
+                                "toolTip": "",
                                 "constraints": {
                                     "required": true,
                                     "regex": "^[a-z0-9A-Z]{3,30}$",
@@ -198,7 +205,7 @@
                         "name": "guacamoleInstanceName",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Container Instance Name",
-                        "toolTip": "Defines the name for Guacamole gateway container",
+                        "toolTip": "",
                         "defaultValue": "guacamole-ci",
                         "constraints": {
                             "required": true,
