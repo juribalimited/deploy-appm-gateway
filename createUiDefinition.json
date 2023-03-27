@@ -35,7 +35,7 @@
                                     "hideExisting": false
                                 },
                                 "subnets": {
-                                    "subnet1": {
+                                    "gatewaySubnet": {
                                         "label": "Desktop Gateway subnet",
                                         "defaultValue": {
                                             "name": "subnet-1",
@@ -47,7 +47,7 @@
                                             "requireContiguousAddresses": true
                                         }
                                     },
-                                    "subnet2": {
+                                    "guacamoleSubnet": {
                                         "label": "Apache Guacamole subnet",
                                         "defaultValue": {
                                             "name": "subnet-2",
@@ -71,7 +71,7 @@
                         "label": "Example section",
                         "elements": [
                             {
-                                "name": "gatewayNetworkSecurityGroupName",
+                                "name": "gatewaySubnetNSGName",
                                 "type": "Microsoft.Common.TextBox",
                                 "label": "Gateway Network Security Group Name",
                                 "toolTip": "Defines the name for network security group used for Gateway WebApp",
@@ -83,7 +83,7 @@
                                 }
                             },
                             {
-                                "name": "containerNetworkSecurityGroupName",
+                                "name": "guacamoleSubnetNSGName",
                                 "type": "Microsoft.Common.TextBox",
                                 "label": "Container Network Security Group Name",
                                 "toolTip": "Defines the name for network security group used for Container",
@@ -141,25 +141,15 @@
                         "label": "Encryption settings",
                         "elements": [
                             {
-                                "name": "APPM_HEXKEY",
-                                "type": "Microsoft.Common.TextBox",
-                                "label": "Key",
-                                "toolTip": "Value from AppM application to be used in Gateway container",
+                                "name": "gatewayEncryptionKey",
+                                "type": "Microsoft.Common.PasswordBox",
+                                "label": {
+                                    "password": "Encryption key",
+                                    "confirmPassword": "Confirm key"
+                                },
+                                "toolTip": "",
                                 "constraints": {
-                                    "required": true,
-                                    "regex": "^[a-z0-9A-Z]{3,30}$",
-                                    "validationMessage": "The hex key must be between 3 and 30 characters long and contain letters and numbers only."          
-                                }
-                            },
-                            {
-                                "name": "APPM_HEXIV",
-                                "type": "Microsoft.Common.TextBox",
-                                "label": "APPM_HEXIV",
-                                "toolTip": "Value from AppM application to be used in Gateway container",
-                                "constraints": {
-                                    "required": true,
-                                    "regex": "^[a-z0-9A-Z]{3,30}$",
-                                    "validationMessage": "The hex key must be between 3 and 30 characters long and contain letters and numbers only."          
+                                    "required": true        
                                 }
                             }
                         ],
@@ -171,9 +161,9 @@
                         "label": "Diagnostic settings",
                         "elements": [
                             {
-                                "name": "APPM_USERNAME",
+                                "name": "diagnosticUsername",
                                 "type": "Microsoft.Common.TextBox",
-                                "label": "APPM_USERNAME",
+                                "label": "Username",
                                 "toolTip": "Value from AppM application to be used in Gateway container",
                                 "constraints": {
                                     "required": true,
@@ -182,10 +172,10 @@
                                 }
                             },
                             {
-                                "name": "APPM_PASSWORD",
+                                "name": "diagnosticPassword",
                                 "type": "Microsoft.Common.PasswordBox",
                                 "label": {
-                                    "password": "APPM_PASSWORD",
+                                    "password": "Password",
                                     "confirmPassword": "Confirm password"
                                 },
                                 "toolTip": "Value from AppM application to be used in Gateway container",
@@ -205,7 +195,7 @@
                 "label": "Apache Guacamole",
                 "elements": [            
                     {
-                        "name": "containerInstanceName",
+                        "name": "guacamoleInstanceName",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Container Instance Name",
                         "toolTip": "Defines the name for Guacamole gateway container",
@@ -215,29 +205,6 @@
                             "regex": "^[a-z0-9A-Z-]{3,40}$",
                             "validationMessage": "The instance name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."          
                         }
-                    },
-                    {
-                        "name": "containerRestartPolicy",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Container Restart Policy",
-                        "toolTip": "The behavior of Azure runtime if gateway container has stopped. Defaults to Always restart.",
-                        "defaultValue": "Always",
-                        "constraints": {
-                            "allowedValues": [
-                                {
-                                "label": "Always",
-                                "value": "Always"
-                                },
-                                {
-                                "label": "Never",
-                                "value": "Never"
-                                },
-                                {
-                                "label": "OnFailure",
-                                "value": "OnFailure"
-                                }
-                            ]          
-                        }
                     }
                 ]
             }
@@ -245,21 +212,19 @@
         "outputs": {
             "virtualNetworkNewOrExisting": "[steps('networkingConfig').networkSection.vnet.newOrExisting]",
             "virtualNetworkName": "[steps('networkingConfig').networkSection.vnet.name]",
-            "virtualNetworkAddressSpace": "[steps('networkingConfig').networkSection.vnet.addressPrefixes]",
-            "containerSubnetName": "[steps('networkingConfig').networkSection.vnet.subnet2.name]",
-            "containerSubnetRange": "[steps('networkingConfig').networkSection.vnet.subnet2.addressPrefixes]",
-            "webAppSubnetName": "[steps('networkingConfig').networkSection.vnet.subnet1.name]",
-            "webAppSubnetRange": "[steps('networkingConfig').networkSection.vnet.subnet1.addressPrefixes]",
-            "gatewayNetworkSecurityGroupName": "[steps('networkingConfig').nsgSection.gatewayNetworkSecurityGroupName]",
-            "containerNetworkSecurityGroupName": "[steps('networkingConfig').nsgSection.containerNetworkSecurityGroupName]",
+            "virtualNetworkAddressPrefixes": "[steps('networkingConfig').networkSection.vnet.addressPrefixes]",
+            "gatewaySubnetName": "[steps('networkingConfig').networkSection.vnet.gatewaySubnet.name]",
+            "gatewaySubnetAddressPrefix": "[steps('networkingConfig').networkSection.vnet.gatewaySubnet.addressPrefixes]",
+            "guacamoleSubnetName": "[steps('networkingConfig').networkSection.vnet.guacamoleSubnet.name]",
+            "guacamoleSubnetAddressPrefix": "[steps('networkingConfig').networkSection.vnet.guacamoleSubnet.addressPrefixes]",
+            "gatewaySubnetNSGName": "[steps('networkingConfig').nsgSection.gatewaySubnetNSGName]",
+            "guacamoleSubnetNSGName": "[steps('networkingConfig').nsgSection.guacamoleSubnetNSGName]",
             "gatewayWebAppName": "[steps('gatewayConfig').containerSection.gatewayWebAppName]",
             "gatewayImageName": "[steps('gatewayConfig').containerSection.gatewayImageName]",
-            "APPM_HEXKEY": "[steps('gatewayConfig').encryptionSection.APPM_HEXKEY]",
-            "APPM_HEXIV": "[steps('gatewayConfig').encryptionSection.APPM_HEXIV]",
-            "APPM_USERNAME": "[steps('gatewayConfig').diagnosticSection.APPM_USERNAME]",
-            "APPM_PASSWORD": "[steps('gatewayConfig').diagnosticSection.APPM_PASSWORD]",
-            "containerInstanceName": "[steps('guacamoleConfig').containerInstanceName]",
-            "containerRestartPolicy": "[steps('guacamoleConfig').containerRestartPolicy]"
+            "gatewayEncryptionKey": "[steps('gatewayConfig').encryptionSection.gatewayEncryptionKey]",
+            "diagnosticUsername": "[steps('gatewayConfig').diagnosticSection.diagnosticUsername]",
+            "diagnosticPassword": "[steps('gatewayConfig').diagnosticSection.diagnosticUsername]",
+            "guacamoleInstanceName": "[steps('guacamoleConfig').guacamoleInstanceName]"
         }
     }
 }
