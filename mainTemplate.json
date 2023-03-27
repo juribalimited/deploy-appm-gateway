@@ -151,9 +151,7 @@
             "tags": {},
             "properties": {
                 "addressSpace": {
-                    "addressPrefixes": [
-                        "[parameters('virtualNetworkAddressSpace')]"
-                    ]
+                    "addressPrefixes": "[parameters('virtualNetworkAddressSpace')]"
                 },
                 "subnets": [
                     {
