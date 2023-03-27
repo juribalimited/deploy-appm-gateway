@@ -21,11 +21,13 @@
             }
         },
         "virtualNetworkAddressSpace": {
-            "type": "String",
-            "defaultValue": "10.0.0.0/22",
-            "metadata": {
-              "description": "Defines the IP range of your virtual network. This should be in CIDR notation, for example 10.0.0.0/22"
-            }
+          "type": "array",
+          "defaultValue": [
+            "10.0.0.0/22"
+          ],
+          "metadata": {
+            "description": "Defines the IP range of your virtual network. This should be in CIDR notation, for example 10.0.0.0/22"
+          }
         },
         "containerSubnetName": {
             "type": "String",
