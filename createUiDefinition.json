@@ -74,7 +74,7 @@
                             {
                                 "name": "gatewaySubnetNSGName",
                                 "type": "Microsoft.Common.TextBox",
-                                "label": "Gateway Subnet NSG Name",
+                                "label": "Gateway subnet NSG name",
                                 "toolTip": "",
                                 "defaultValue": "gateway-subnet-nsg",
                                 "constraints": {
@@ -86,7 +86,7 @@
                             {
                                 "name": "guacamoleSubnetNSGName",
                                 "type": "Microsoft.Common.TextBox",
-                                "label": "Guacamole Subnet NSG Name",
+                                "label": "Guacamole subnet NSG name",
                                 "toolTip": "",
                                 "defaultValue": "container-subnet-nsg",
                                 "constraints": {
@@ -124,7 +124,7 @@
                             {
                                 "name": "gatewayImageName",
                                 "type": "Microsoft.Common.DropDown",
-                                "label": "AppM Version",
+                                "label": "AppM version",
                                 "placeholder": "",
                                 "defaultValue": "Latest",
                                 "toolTip": "",
@@ -204,7 +204,7 @@
                     {
                         "name": "guacamoleInstanceName",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Container Instance Name",
+                        "label": "Container instance name",
                         "toolTip": "",
                         "defaultValue": "guacamole-ci",
                         "constraints": {
