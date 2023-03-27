@@ -2,6 +2,17 @@
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "virtualNetworkNewOrExisting": {
+          "type": "string",
+          "defaultValue": "new",
+          "allowedValues": [
+            "new",
+            "existing"
+          ],
+          "metadata": {
+            "description": "Determines whether or not a new virtual network should be provisioned."
+          }
+        },
         "virtualNetworkName": {
             "type": "String",
             "defaultValue": "appm-client-vnet",
@@ -14,20 +25,6 @@
             "defaultValue": "10.0.0.0/22",
             "metadata": {
               "description": "Defines the IP range of your virtual network. This should be in CIDR notation, for example 10.0.0.0/22"
-            }
-        },
-        "guestVMSubnetName": {
-            "type": "String",
-            "defaultValue": "guest-snet",
-            "metadata": {
-              "description": "Defines the name of the virtual network subnet where Guest VM's will be located"
-            }
-        },
-        "guestVMSubnetRange": {
-            "type": "String",
-            "defaultValue": "10.0.0.0/24",
-            "metadata": {
-              "description": "Defines the network address subnet which Guest VM's will be attached to. This should be in CIDR notation, for example 10.0.0.0/24"
             }
         },
         "containerSubnetName": {
@@ -140,6 +137,7 @@
     },
     "resources": [
         {
+            "condition": "[equals(parameters('virtualNetworkNewOrExisting'), 'new')]",
             "type": "Microsoft.Network/VirtualNetworks",
             "apiVersion": "2021-01-01",
             "name": "[parameters('virtualNetworkName')]",
@@ -156,12 +154,6 @@
                     ]
                 },
                 "subnets": [
-                    {
-                        "name": "[parameters('guestVMSubnetName')]",
-                        "properties": {
-                            "addressPrefix": "[parameters('guestVMSubnetRange')]"
-                        }
-                    },
                     {
                         "name": "[parameters('containerSubnetName')]",
                         "properties": {
