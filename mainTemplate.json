@@ -385,5 +385,5 @@
           "type": "array",
           "value": "[reference(resourceId('Microsoft.Web/sites', variables('webAppPortalName'))).HostNames]"
         }
-      }
+    }
 }
