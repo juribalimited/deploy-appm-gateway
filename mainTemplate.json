@@ -15,7 +15,7 @@
         },
         "virtualNetworkName": {
             "type": "string",
-            "defaultValue": "appm-client-vnet",
+            "defaultValue": "vnet01",
             "metadata": {
               "description": "Defines the name of your virtual network"
             }
@@ -73,7 +73,7 @@
         },
         "gatewaySubnetNSGName": {
           "type": "string",
-          "defaultValue": "ateway-subnet-nsg",
+          "defaultValue": "gateway-snet-nsg",
           "metadata": {
             "description": "Defines the name for network security group used for Gateway WebApp"
           } 
@@ -81,7 +81,7 @@
 
         "guacamoleSubnetNSGName": {
           "type": "string",
-          "defaultValue": "container-subnet-nsg",
+          "defaultValue": "guacamole-snet-nsg",
           "metadata": {
             "description": "Defines the name for network security group used for Container"
           } 
