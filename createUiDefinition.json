@@ -259,6 +259,7 @@
             "guacamoleSubnetNSGName": "[steps('networkingConfig').nsgSection.guacamoleSubnetNSGName]",
             "gatewayWebAppName": "[steps('gatewayConfig').containerSection.gatewayWebAppName]",
             "gatewayImageName": "[steps('gatewayConfig').containerSection.gatewayImageName]",
+            "customerName": "[steps('gatewayConfig').containerSection.customerName]",
             "gatewayEncryptionKey": "[steps('gatewayConfig').encryptionSection.gatewayEncryptionKey]",
             "diagnosticUsername": "[steps('gatewayConfig').diagnosticSection.diagnosticUsername]",
             "diagnosticPassword": "[steps('gatewayConfig').diagnosticSection.diagnosticUsername]",
