@@ -138,18 +138,18 @@
                                     "required": true
                                 },
                                 "visible": true
-                            },
-                            {
-                                "name": "customerName",
-                                "type": "Microsoft.Common.TextBox",
-                                "label": "Customer Name",
-                                "toolTip": "Customer identifier. This will be used as part of the Gateway WebApp configuration. This can be found from main AppM website address, for example %customerName%.appm.juriba.app",
-                                "constraints": {
-                                    "required": true,
-                                    "regex": "^[a-z]{3,10}$",
-                                    "validationMessage": "The customer name must be between 3 and 10 characters long and contain letters only."          
-                                }
                             }
+                            // {
+                            //     "name": "customerName",
+                            //     "type": "Microsoft.Common.TextBox",
+                            //     "label": "Customer Name",
+                            //     "toolTip": "Customer identifier. This will be used as part of the Gateway WebApp configuration. This can be found from main AppM website address, for example %customerName%.appm.juriba.app",
+                            //     "constraints": {
+                            //         "required": true,
+                            //         "regex": "^[a-z]{3,10}$",
+                            //         "validationMessage": "The customer name must be between 3 and 10 characters long and contain letters only."          
+                            //     }
+                            // }
                         ],
                         "visible": true
                     },
@@ -259,7 +259,7 @@
             "guacamoleSubnetNSGName": "[steps('networkingConfig').nsgSection.guacamoleSubnetNSGName]",
             "gatewayWebAppName": "[steps('gatewayConfig').containerSection.gatewayWebAppName]",
             "gatewayImageName": "[steps('gatewayConfig').containerSection.gatewayImageName]",
-            "customerName": "[steps('gatewayConfig').containerSection.customerName]",
+            // "customerName": "[steps('gatewayConfig').containerSection.customerName]",
             "gatewayEncryptionKey": "[steps('gatewayConfig').encryptionSection.gatewayEncryptionKey]",
             "diagnosticUsername": "[steps('gatewayConfig').diagnosticSection.diagnosticUsername]",
             "diagnosticPassword": "[steps('gatewayConfig').diagnosticSection.diagnosticUsername]",
