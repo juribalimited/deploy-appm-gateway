@@ -3,253 +3,255 @@
     "handler": "Microsoft.Azure.CreateUIDef",
     "version": "0.1.2-preview",
     "parameters": {
-        "basics": [
-            {
-                "name": "virtualNetworkName",
-                    "type": "Microsoft.Common.TextBox",
-                    "label": "Virtual Network Name",
-                    "toolTip": "The name of the virtual network",
-                    "defaultValue": "appm-client-vnet",
-                    "constraints": {
-                        "required": true,
-                        "regex": "^[a-z0-9A-Z-]{3,40}$",
-                        "validationMessage": "The VM Network must be between 3 and 40 characters long and contain letters, numbers and hyphens only."          
-                    }
-            },
-            {
-                "name": "virtualNetworkAddressSpace",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Virtual Network Address Space",
-                "toolTip": "Defines the IP range of your virtual network. This should be in CIDR notation, for example 10.0.0.0/22",
-                "defaultValue": "10.0.0.0/22",
-                "constraints": {
-                    "required": true
-                }
-            },
-            {
-                "name": "guestVMSubnetName",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Guest VM Subnet Name",
-                "toolTip": "Defines the name of the virtual network subnet where Guest VM's will be located",
-                "defaultValue": "guest-snet",
-                "constraints": {
-                    "required": true,
-                    "regex": "^[a-z0-9A-Z-]{3,40}$",
-                    "validationMessage": "The subnet name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."          
-                }
-            },
-            {
-                "name": "guestVMSubnetRange",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Guest VM Subnet Range",
-                "toolTip": "Defines the network address subnet which Guest VM's will be attached to. This should be in CIDR notation, for example 10.0.0.0/24",
-                "defaultValue": "10.0.0.0/24",
-                "constraints": {
-                    "required": true
-                }
-            },
-            {
-                "name": "containerSubnetName",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Container Subnet Name",
-                "toolTip": "Defines the name of the virtual network subnet where the guacamole container will be located",
-                "defaultValue": "container-snet",
-                "constraints": {
-                    "required": true,
-                    "regex": "^[a-z0-9A-Z-]{3,40}$",
-                    "validationMessage": "The subnet name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."          
-                }
-            },
-            {
-                "name": "containerSubnetRange",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Container Subnet Range",
-                "toolTip": "Defines the network address subnet which gateway container will be attached to. This should be in CIDR notation, for example 10.0.1.0/24",
-                "defaultValue": "10.0.1.0/24",
-                "constraints": {
-                    "required": true
-                }
-            },
-            {
-                "name": "webAppSubnetName",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Web App Subnet Name",
-                "toolTip": "Defines the name of the virtual network subnet where the webapp will be located",
-                "defaultValue": "webapp-snet",
-                "constraints": {
-                    "required": true,
-                    "regex": "^[a-z0-9A-Z-]{3,40}$",
-                    "validationMessage": "The subnet name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."          
-                }
-            },
-            {
-                "name": "webAppSubnetRange",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Web App Subnet Range",
-                "toolTip": "Defines the network address subnet where the webapp will reside. This should be in CIDR notation, for example 10.0.2.0/24",
-                "defaultValue": "10.0.2.0/24",
-                "constraints": {
-                    "required": true
-                }
-            },
-            {
-                "name": "containerInstanceName",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Container Instance Name",
-                "toolTip": "Defines the name for Guacamole gateway container",
-                "defaultValue": "guacamole-ci",
-                "constraints": {
-                    "required": true,
-                    "regex": "^[a-z0-9A-Z-]{3,40}$",
-                    "validationMessage": "The instance name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."          
-                }
-            },
-            {
-                "name": "containerRestartPolicy",
-                "type": "Microsoft.Common.DropDown",
-                "label": "Container Restart Policy",
-                "toolTip": "The behavior of Azure runtime if gateway container has stopped. Defaults to Always restart.",
-                "defaultValue": "Always",
-                "constraints": {
-                    "allowedValues": [
-                        {
-                          "label": "Always",
-                          "value": "Always"
-                        },
-                        {
-                          "label": "Never",
-                          "value": "Never"
-                        },
-                        {
-                          "label": "OnFailure",
-                          "value": "OnFailure"
-                        }
-                    ]          
-                }
-            },
-            {
-                "name": "gatewayWebAppName",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Gateway WebApp Name",
-                "toolTip": "Defines the name for Azure gateway web app",
-                "defaultValue": "appm-gateway",
-                "constraints": {
-                    "required": true,
-                    "regex": "^[a-z0-9A-Z-]{3,40}$",
-                    "validationMessage": "The webapp name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."          
-                }
-            },
-            {
-                "name": "gatewayNetworkSecurityGroupName",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Gateway Network Security Group Name",
-                "toolTip": "Defines the name for network security group used for Gateway WebApp",
-                "defaultValue": "gateway-nsg",
-                "constraints": {
-                    "required": true,
-                    "regex": "^[a-z0-9A-Z-]{3,40}$",
-                    "validationMessage": "The security group name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."          
-                }
-            },
-            {
-                "name": "containerNetworkSecurityGroupName",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Container Network Security Group Name",
-                "toolTip": "Defines the name for network security group used for Container",
-                "defaultValue": "container-nsg",
-                "constraints": {
-                    "required": true,
-                    "regex": "^[a-z0-9A-Z-]{3,40}$",
-                    "validationMessage": "The security group name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."          
-                }
-            },
-            {
-                "name": "gatewayImageName",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Gateway Image Name",
-                "toolTip": "Defines the image to be used for Gateway container. This will default to latest available. Full list can be found here https://hub.docker.com/repository/docker/juriba/appmgateway/general",
-                "defaultValue": "sha-d9174c1",
-                "constraints": {
-                    "required": true,
-                    "regex": "^[a-z0-9A-Z-]{3,20}$",
-                    "validationMessage": "The image name must be between 3 and 20 characters long and contain letters, numbers and hyphens only."          
-                }
-            }
-        ],
+        "basics": [],
         "steps": [
             {
-                "name": "applicationConfig",
-                "label": "APPM Application Config",
+                "name": "networkingConfig",
+                "label": "Networking",
                 "elements": [
                     {
-                        "name": "APPM_USERNAME",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "APPM_USERNAME",
-                        "toolTip": "Value from AppM application to be used in Gateway container",
-                        "constraints": {
-                            "required": true,
-                            "regex": "^[a-z0-9A-Z]{3,15}$",
-                            "validationMessage": "The username must be between 3 and 15 characters long and contain letters and numbers only."          
-                        }
+                        "name": "networkSection",
+                        "label": "",
+                        "type": "Microsoft.Common.Section",
+                        "elements": [
+                            {
+                                "name": "vnet",
+                                "type": "Microsoft.Network.VirtualNetworkCombo",
+                                "label": {
+                                    "virtualNetwork": "Virtual network",
+                                    "subnets": "Subnets"
+                                },
+                                "toolTip": {
+                                    "virtualNetwork": "",
+                                    "subnets": ""
+                                },
+                                "defaultValue": {
+                                    "name": "vnet01",
+                                    "addressPrefixSize": "/16"
+                                },
+                                "constraints": {
+                                    "minAddressPrefixSize": "/16"
+                                },
+                                "options": {
+                                    "hideExisting": false
+                                },
+                                "subnets": {
+                                    "gatewaySubnet": {
+                                        "label": "Gateway subnet",
+                                        "defaultValue": {
+                                            "name": "gateway-subnet",
+                                            "addressPrefixSize": "/24"
+                                        },
+                                        "constraints": {
+                                            "minAddressPrefixSize": "/24",
+                                            "minAddressCount": 12,
+                                            "requireContiguousAddresses": true
+                                        }
+                                    },
+                                    "guacamoleSubnet": {
+                                        "label": "Guacamole subnet",
+                                        "defaultValue": {
+                                            "name": "guacamole-subnet",
+                                            "addressPrefixSize": "/26"
+                                        },
+                                        "constraints": {
+                                            "minAddressPrefixSize": "/26",
+                                            "minAddressCount": 8,
+                                            "requireContiguousAddresses": true
+                                        }
+                                    }
+                                },
+                                "visible": true
+                            }
+                        ],
+                        "visible": true
                     },
                     {
-                        "name": "APPM_PASSWORD",
-                        "type": "Microsoft.Common.PasswordBox",
-                        "label": {
-                            "password": "APPM_PASSWORD",
-                            "confirmPassword": "Confirm password"
-                        },
-                        "toolTip": "Value from AppM application to be used in Gateway container",
-                        "constraints": {
-                            "required": true,
-                            "regex": "^[a-z0-9A-Z]{3,30}$",
-                            "validationMessage": "The password must be between 3 and 30 characters long and contain letters and numbers only."          
-                        }
+                        "name": "nsgSection",
+                        "type": "Microsoft.Common.Section",
+                        "label": "Network security groups",
+                        "elements": [
+                            {
+                                "name": "gatewaySubnetNSGName",
+                                "type": "Microsoft.Common.TextBox",
+                                "label": "Gateway subnet NSG name",
+                                "toolTip": "",
+                                "defaultValue": "gateway-subnet-nsg",
+                                "constraints": {
+                                    "required": true,
+                                    "regex": "^[a-z0-9A-Z-]{3,40}$",
+                                    "validationMessage": "The security group name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."          
+                                }
+                            },
+                            {
+                                "name": "guacamoleSubnetNSGName",
+                                "type": "Microsoft.Common.TextBox",
+                                "label": "Guacamole subnet NSG name",
+                                "toolTip": "",
+                                "defaultValue": "container-subnet-nsg",
+                                "constraints": {
+                                    "required": true,
+                                    "regex": "^[a-z0-9A-Z-]{3,40}$",
+                                    "validationMessage": "The security group name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."          
+                                }
+                            }
+                        ],
+                        "visible": true
+                    }
+                ]
+            },
+            {
+                "name": "gatewayConfig",
+                "label": "AppM Desktop Gateway",
+                "elements": [
+                    {
+                        "name": "containerSection",
+                        "type": "Microsoft.Common.Section",
+                        "label": "WebApp settings",
+                        "elements": [
+                            {
+                                "name": "gatewayWebAppName",
+                                "type": "Microsoft.Common.TextBox",
+                                "label": "Gateway WebApp Name",
+                                "toolTip": "",
+                                "defaultValue": "appm-gateway",
+                                "constraints": {
+                                    "required": true,
+                                    "regex": "^[a-z0-9A-Z-]{3,40}$",
+                                    "validationMessage": "The webapp name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."          
+                                }
+                            },
+                            {
+                                "name": "gatewayImageName",
+                                "type": "Microsoft.Common.DropDown",
+                                "label": "AppM version",
+                                "placeholder": "",
+                                "defaultValue": "Latest",
+                                "toolTip": "",
+                                "constraints": {
+                                    "allowedValues": [
+                                        {
+                                            "label": "Latest",
+                                            "value": "sha-d9174c1"
+                                        }
+                                    ],
+                                    "required": true
+                                },
+                                "visible": true
+                            }
+                        ],
+                        "visible": true
                     },
                     {
-                        "name": "APPM_HEXKEY",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "APPM_HEXKEY",
-                        "toolTip": "Value from AppM application to be used in Gateway container",
-                        "constraints": {
-                            "required": true,
-                            "regex": "^[a-z0-9A-Z]{3,30}$",
-                            "validationMessage": "The hex key must be between 3 and 30 characters long and contain letters and numbers only."          
-                        }
+                        "name": "encryptionSection",
+                        "type": "Microsoft.Common.Section",
+                        "label": "Encryption settings",
+                        "elements": [
+                            {
+                                "name": "gatewayEncryptionInfo",
+                                "type": "Microsoft.Common.InfoBox",
+                                "visible": true,
+                                "options": {
+                                  "icon": "Info",
+                                  "text": "Please enter the encryption key generated by AppM.",
+                                  "uri": "https://docs.juriba.com/appm/next"
+                                }
+                            },
+                            {
+                                "name": "gatewayEncryptionKey",
+                                "type": "Microsoft.Common.PasswordBox",
+                                "label": {
+                                    "password": "Encryption key",
+                                    "confirmPassword": "Confirm key"
+                                },
+                                "toolTip": "",
+                                "constraints": {
+                                    "required": true        
+                                }
+                            }
+                        ],
+                        "visible": true
                     },
                     {
-                        "name": "APPM_HEXIV",
+                        "name": "diagnosticSection",
+                        "type": "Microsoft.Common.Section",
+                        "label": "Diagnostic settings",
+                        "elements": [
+                            {
+                                "name": "gatewayDiagnosticInfo",
+                                "type": "Microsoft.Common.InfoBox",
+                                "visible": true,
+                                "options": {
+                                  "icon": "Info",
+                                  "text": "AppM Desktop Gateway has a troubleshooting tool, the credentials provided will be used to secure access to it.",
+                                  "uri": "https://docs.juriba.com/appm/next"
+                                }
+                            },
+                            {
+                                "name": "diagnosticUsername",
+                                "type": "Microsoft.Common.TextBox",
+                                "label": "Username",
+                                "toolTip": "",
+                                "constraints": {
+                                    "required": true,
+                                    "regex": "^[a-z0-9A-Z]{3,15}$",
+                                    "validationMessage": "The username must be between 3 and 15 characters long and contain letters and numbers only."          
+                                }
+                            },
+                            {
+                                "name": "diagnosticPassword",
+                                "type": "Microsoft.Common.PasswordBox",
+                                "label": {
+                                    "password": "Password",
+                                    "confirmPassword": "Confirm password"
+                                },
+                                "toolTip": "",
+                                "constraints": {
+                                    "required": true,
+                                    "regex": "^[a-z0-9A-Z]{3,30}$",
+                                    "validationMessage": "The password must be between 3 and 30 characters long and contain letters and numbers only."          
+                                }
+                            }
+                        ],
+                        "visible": true
+                    }
+                ]
+            },
+            {
+                "name": "guacamoleConfig",
+                "label": "Apache Guacamole",
+                "elements": [            
+                    {
+                        "name": "guacamoleInstanceName",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "APPM_HEXIV",
-                        "toolTip": "Value from AppM application to be used in Gateway container",
+                        "label": "Container instance name",
+                        "toolTip": "",
+                        "defaultValue": "guacamole-ci",
                         "constraints": {
                             "required": true,
-                            "regex": "^[a-z0-9A-Z]{3,30}$",
-                            "validationMessage": "The hex key must be between 3 and 30 characters long and contain letters and numbers only."          
+                            "regex": "^[a-z0-9A-Z-]{3,40}$",
+                            "validationMessage": "The instance name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."          
                         }
                     }
                 ]
             }
         ],
         "outputs": {
-            "virtualNetworkName": "[basics('virtualNetworkName')]",
-            "virtualNetworkAddressSpace": "[basics('virtualNetworkAddressSpace')]",
-            "guestVMSubnetName": "[basics('guestVMSubnetName')]",
-            "guestVMSubnetRange": "[basics('guestVMSubnetRange')]",
-            "containerSubnetName": "[basics('containerSubnetName')]",
-            "containerSubnetRange": "[basics('containerSubnetRange')]",
-            "webAppSubnetName": "[basics('webAppSubnetName')]",
-            "webAppSubnetRange": "[basics('webAppSubnetRange')]",
-            "containerInstanceName": "[basics('containerInstanceName')]",
-            "containerRestartPolicy": "[basics('containerRestartPolicy')]",
-            "gatewayWebAppName": "[basics('gatewayWebAppName')]",
-            "gatewayNetworkSecurityGroupName": "[basics('gatewayNetworkSecurityGroupName')]",
-            "containerNetworkSecurityGroupName": "[basics('containerNetworkSecurityGroupName')]",
-            "gatewayImageName": "[basics('gatewayImageName')]",
-            "APPM_USERNAME": "[steps('applicationConfig').APPM_USERNAME]",
-            "APPM_PASSWORD": "[steps('applicationConfig').APPM_PASSWORD]",
-            "APPM_HEXKEY": "[steps('applicationConfig').APPM_HEXKEY]",
-            "APPM_HEXIV": "[steps('applicationConfig').APPM_HEXIV]"
+            "virtualNetworkNewOrExisting": "[steps('networkingConfig').networkSection.vnet.newOrExisting]",
+            "virtualNetworkName": "[steps('networkingConfig').networkSection.vnet.name]",
+            "virtualNetworkAddressPrefixes": "[steps('networkingConfig').networkSection.vnet.addressPrefixes]",
+            "gatewaySubnetName": "[steps('networkingConfig').networkSection.vnet.gatewaySubnet.name]",
+            "gatewaySubnetAddressPrefix": "[steps('networkingConfig').networkSection.vnet.gatewaySubnet.addressPrefixes]",
+            "guacamoleSubnetName": "[steps('networkingConfig').networkSection.vnet.guacamoleSubnet.name]",
+            "guacamoleSubnetAddressPrefix": "[steps('networkingConfig').networkSection.vnet.guacamoleSubnet.addressPrefixes]",
+            "gatewaySubnetNSGName": "[steps('networkingConfig').nsgSection.gatewaySubnetNSGName]",
+            "guacamoleSubnetNSGName": "[steps('networkingConfig').nsgSection.guacamoleSubnetNSGName]",
+            "gatewayWebAppName": "[steps('gatewayConfig').containerSection.gatewayWebAppName]",
+            "gatewayImageName": "[steps('gatewayConfig').containerSection.gatewayImageName]",
+            "gatewayEncryptionKey": "[steps('gatewayConfig').encryptionSection.gatewayEncryptionKey]",
+            "diagnosticUsername": "[steps('gatewayConfig').diagnosticSection.diagnosticUsername]",
+            "diagnosticPassword": "[steps('gatewayConfig').diagnosticSection.diagnosticUsername]",
+            "guacamoleInstanceName": "[steps('guacamoleConfig').guacamoleInstanceName]"
         }
     }
 }
