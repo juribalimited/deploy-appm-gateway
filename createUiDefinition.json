@@ -39,7 +39,7 @@
                                     "gatewaySubnet": {
                                         "label": "Gateway subnet",
                                         "defaultValue": {
-                                            "name": "gateway-subnet",
+                                            "name": "gateway-snet",
                                             "addressPrefixSize": "/24"
                                         },
                                         "constraints": {
@@ -51,7 +51,7 @@
                                     "guacamoleSubnet": {
                                         "label": "Guacamole subnet",
                                         "defaultValue": {
-                                            "name": "guacamole-subnet",
+                                            "name": "guacamole-snet",
                                             "addressPrefixSize": "/26"
                                         },
                                         "constraints": {
@@ -76,7 +76,7 @@
                                 "type": "Microsoft.Common.TextBox",
                                 "label": "Gateway subnet NSG name",
                                 "toolTip": "",
-                                "defaultValue": "gateway-subnet-nsg",
+                                "defaultValue": "gateway-snet-nsg",
                                 "constraints": {
                                     "required": true,
                                     "regex": "^[a-z0-9A-Z-]{3,40}$",
@@ -88,7 +88,7 @@
                                 "type": "Microsoft.Common.TextBox",
                                 "label": "Guacamole subnet NSG name",
                                 "toolTip": "",
-                                "defaultValue": "container-subnet-nsg",
+                                "defaultValue": "guacamole-snet-nsg",
                                 "constraints": {
                                     "required": true,
                                     "regex": "^[a-z0-9A-Z-]{3,40}$",
@@ -138,6 +138,17 @@
                                     "required": true
                                 },
                                 "visible": true
+                            },
+                            {
+                                "name": "customerName",
+                                "type": "Microsoft.Common.TextBox",
+                                "label": "Customer Name",
+                                "toolTip": "Customer identifier. This will be used as part of the Gateway WebApp configuration. This can be found from main AppM website address, for example %customerName%.appm.juriba.app",
+                                "constraints": {
+                                    "required": true,
+                                    "regex": "^[a-z]{3,10}$",
+                                    "validationMessage": "The customer name must be between 3 and 10 characters long and contain letters only."          
+                                }
                             }
                         ],
                         "visible": true

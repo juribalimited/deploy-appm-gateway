@@ -31,7 +31,7 @@
         },
         "guacamoleSubnetName": {
             "type": "string",
-            "defaultValue": "container-snet",
+            "defaultValue": "guacamole-snet",
             "metadata": {
               "description": "Defines the name of the virtual network subnet where the guacamole container will be located"
             }
@@ -45,7 +45,7 @@
         },
         "gatewaySubnetName": {
           "type": "string",
-          "defaultValue": "webapp-snet",
+          "defaultValue": "gateway-snet",
           "metadata": {
             "description": "Defines the name of the virtual network subnet where the webapp will be located"
           }
@@ -73,7 +73,7 @@
         },
         "gatewaySubnetNSGName": {
           "type": "string",
-          "defaultValue": "gateway-nsg",
+          "defaultValue": "ateway-subnet-nsg",
           "metadata": {
             "description": "Defines the name for network security group used for Gateway WebApp"
           } 
@@ -81,9 +81,15 @@
 
         "guacamoleSubnetNSGName": {
           "type": "string",
-          "defaultValue": "container-nsg",
+          "defaultValue": "container-subnet-nsg",
           "metadata": {
             "description": "Defines the name for network security group used for Container"
+          } 
+        },
+        "customerName": {
+          "type": "string",
+          "metadata": {
+            "description": "Customer identifier. This will be used as part of the Gateway WebApp configuration. This can be found from Appm Application web address, for example %customerName%.appm.juriba.app"
           } 
         },
 
@@ -294,6 +300,10 @@
               "minTlsVersion": "1.2",
               "healthCheckPath": "/vnc/",
               "ftpsState": "Disabled",
+              "cors": {
+                "allowedOrigins": ["[concat ('https://', parameters('customerName'), '.appm.juriba.app')]"],
+                "supportCredentials": "true"
+              },
               "appSettings": [
                 {
                   "name": "WEBSITES_ENABLE_APP_SERVICE_STORAGE",
@@ -370,6 +380,10 @@
         "containerIPv4Address": {
           "type": "string",
           "value": "[reference(resourceId('Microsoft.ContainerInstance/containerGroups', parameters('guacamoleInstanceName'))).ipAddress.ip]"
+        },
+        "siteAddress": {
+          "type": "array",
+          "value": "[reference(resourceId('Microsoft.Web/sites', variables('webAppPortalName'))).HostNames]"
         }
       }
 }
