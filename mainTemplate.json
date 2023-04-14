@@ -288,7 +288,8 @@
             "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]"
           ],
           "properties": {
-            "name": "[variables('webAppPortalName')]",
+            // "name": "[variables('webAppPortalName')]",
+            "name": "[parameters('gatewayWebAppName')]",,
             "http20Enabled": true,
             "httpsOnly": true,
             "virtualNetworkSubnetId":"[variables('gatewaySubnetRef')]",
