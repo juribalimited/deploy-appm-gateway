@@ -382,7 +382,7 @@
         },
         "siteAddress": {
           "type": "array",
-          "value": "[reference(resourceId('Microsoft.Web/sites', variables('webAppPortalName'))).HostNames]"
+          "value": "[reference(resourceId('Microsoft.Web/sites', parameters('gatewayWebAppName'))).HostNames]"
         }
     }
 }
