@@ -122,7 +122,6 @@
     "variables": {
         "containerSubnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('guacamoleSubnetName'))]",
         "gatewaySubnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('gatewaySubnetName'))]",
-        "webAppPortalName": "[concat(parameters('gatewayWebAppName'), '-app')]",
         "appServicePlanName": "[concat(parameters('gatewayWebAppName'), '-asp')]"
     },
     "resources": [
@@ -281,7 +280,7 @@
         {
           "type": "Microsoft.Web/sites",
           "apiVersion": "2022-09-01",
-          "name": "[variables('webAppPortalName')]",
+          "name": "[parameters('gatewayWebAppName')]",
           "location": "[ResourceGroup().location]",
           "kind": "app,linux,container",
           "dependsOn": [
