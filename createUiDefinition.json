@@ -110,21 +110,10 @@
                         "label": "WebApp settings",
                         "elements": [
                             {
-                                "name": "gatewayWebAppName",
-                                "type": "Microsoft.Common.TextBox",
-                                "label": "Gateway WebApp Name",
-                                "toolTip": "",
-                                "defaultValue": "appm-gateway",
-                                "constraints": {
-                                    "required": true,
-                                    "regex": "^[a-z0-9A-Z-]{3,40}$",
-                                    "validationMessage": "The webapp name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."          
-                                }
-                            },
-                            {
                                 "name": "customerName",
                                 "type": "Microsoft.Common.TextBox",
                                 "label": "Customer Name",
+                                "placeholder": "%customerName%.appm.juriba.app",
                                 "toolTip": "Customer identifier. This will be used as part of the Gateway WebApp configuration. This can be found from main AppM website address, for example %customerName%.appm.juriba.app",
                                 "constraints": {
                                     "required": true,
@@ -149,7 +138,59 @@
                                     "required": true
                                 },
                                 "visible": true
+                            },
+                            {
+                                "name": "appServiceAvailabilityApi",
+                                "type": "Microsoft.Solutions.ArmApiControl",
+                                "request": {
+                                  "method": "POST",
+                                  "path": "[concat(subscription().id, '/providers/Microsoft.Web/checknameavailability?api-version=2021-02-01')]",
+                                  "body": "[parse(concat('{\"name\":\"', concat('', steps('gatewayConfig').containerSection.gatewayWebAppName), '\", \"type\": \"Microsoft.Web/sites\"}'))]"
+                                }
+                            },
+                            {
+                                "name": "gatewayWebAppName",
+                                "type": "Microsoft.Common.TextBox",
+                                "label": "Gateway WebApp Name",
+                                "toolTip": "Defines the name for Azure gateway web app address. For example %gateway_webapp_name%.azurewebsites.net",
+                                "placeholder": "%gateway_webapp_name%.azurewebsites.net",
+                                "constraints": {
+                                  "validations": [
+                                    {
+                                      "regex": "^[a-z0-9A-Z-]{3,30}$",
+                                      "message": "The webapp name must be between 3 and 30 characters long and contain letters, numbers and hyphens only."
+                                    },
+                                    {
+                                      "isValid": "[not(equals(steps('gatewayConfig').containerSection.appServiceAvailabilityApi.nameAvailable, false))]",
+                                      "message": "[concat('Error with the url: ', steps('gatewayConfig').containerSection.gatewayWebAppName, '. Reason: ', steps('gatewayConfig').containerSection.appServiceAvailabilityApi.reason)]"
+                                    },
+                                    {
+                                      "isValid": "[greater(length(steps('gatewayConfig').containerSection.gatewayWebAppName), 2)]",
+                                      "message": "The unique domain suffix should be 3 characters or more."
+                                    },
+                                    {
+                                      "isValid": "[less(length(steps('gatewayConfig').containerSection.gatewayWebAppName), 31)]",
+                                      "message": "The unique domain suffix should be shorter than 30 characters."
+                                    }
+                                  ]
+                                }
                             }
+                        ],
+                        "visible": true
+                    },
+                    {
+                        "name": "section1",
+                        "type": "Microsoft.Common.Section",
+                        "label": "URLs to be created:",
+                        "elements": [
+                          {
+                            "name": "domainExamplePortal",
+                            "type": "Microsoft.Common.TextBlock",
+                            "visible": true,
+                            "options": {
+                                "text": "[concat('https://', steps('gatewayConfig').containerSection.gatewayWebAppName, '.azurewebsites.net -  Azure Gateway Web App URL')]"
+                            }
+                          }
                         ],
                         "visible": true
                     },
