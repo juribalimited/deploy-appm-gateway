@@ -300,7 +300,7 @@
               "healthCheckPath": "/vnc/",
               "ftpsState": "Disabled",
               "cors": {
-                "allowedOrigins": "[parameters('appmWebsiteAddress')]",
+                "allowedOrigins": ["[parameters('appmWebsiteAddress')]"],
                 "supportCredentials": "true"
               },
               "appSettings": [
