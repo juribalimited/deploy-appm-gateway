@@ -110,15 +110,15 @@
                         "label": "WebApp settings",
                         "elements": [
                             {
-                                "name": "customerName",
+                                "name": "appmWebsiteAddress",
                                 "type": "Microsoft.Common.TextBox",
-                                "label": "Customer Name",
+                                "label": "AppM Website Address",
                                 "placeholder": "%customerName%.appm.juriba.app",
-                                "toolTip": "Customer identifier. This will be used as part of the Gateway WebApp configuration. This can be found from main AppM website address, for example %customerName%.appm.juriba.app",
+                                "toolTip": "This will be used to allow communication from main AppM website. Please enter in format %customername%.appm.juriba.app",
                                 "constraints": {
                                     "required": true,
-                                    "regex": "^[a-z]{3,10}$",
-                                    "validationMessage": "The customer name must be between 3 and 10 characters long and contain letters only."          
+                                    "regex": "^[a-z]{3,10}.appm.juriba.app$",
+                                    "validationMessage": "The AppM site must be in format %customername%.appm.juriba.app. Customer name element of site must be between 3 and 10 characters"          
                                 }
                             },
                             {
@@ -299,7 +299,7 @@
             "gatewaySubnetNSGName": "[steps('networkingConfig').nsgSection.gatewaySubnetNSGName]",
             "guacamoleSubnetNSGName": "[steps('networkingConfig').nsgSection.guacamoleSubnetNSGName]",
             "gatewayWebAppName": "[steps('gatewayConfig').containerSection.gatewayWebAppName]",
-            "customerName": "[steps('gatewayConfig').containerSection.customerName]",
+            "appmWebsiteAddress": "[steps('gatewayConfig').containerSection.appmWebsiteAddress]",
             "gatewayImageName": "[steps('gatewayConfig').containerSection.gatewayImageName]",
             "gatewayEncryptionKey": "[steps('gatewayConfig').encryptionSection.gatewayEncryptionKey]",
             "diagnosticUsername": "[steps('gatewayConfig').diagnosticSection.diagnosticUsername]",

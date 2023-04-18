@@ -13,6 +13,17 @@
             "description": "Determines whether or not a new virtual network should be provisioned."
           }
         },
+        "publicWebApp": {
+          "type": "string",
+          "defaultValue": "no",
+          "allowedValues": [
+            "no",
+            "yes"
+          ],
+          "metadata": {
+            "description": "Determines whether or not the Web App is publically accessible or restriced to private VNET."
+          }
+        },
         "virtualNetworkName": {
             "type": "string",
             "defaultValue": "vnet01",
@@ -86,7 +97,7 @@
             "description": "Defines the name for network security group used for Container"
           } 
         },
-        "appmWebsiteAddress": {
+        "customerName": {
           "type": "string",
           "metadata": {
             "description": "Customer identifier. This will be used as part of the Gateway WebApp configuration. This can be found from Appm Application web address, for example %customerName%.appm.juriba.app"
@@ -117,7 +128,26 @@
           "metadata": {
             "description": "Value from AppM application to be used in Gateway container."
           } 
-        }
+        },
+        "privateEndpoint_name": {
+          "type": "string",
+          "metadata":{
+              "description": "Name of your Private Endpoint"
+          }
+      },
+      "privateLinkConnection_name": {
+          "type": "string",
+          "metadata":{
+              "description": "Link name between your Private Endpoint and your Web App"
+          }
+      },
+      "privateDNSZone_name": {
+          "type": "string",
+          "defaultValue": "privatelink.azurewebsites.net",
+          "metadata":{
+              "description": "Name must be privatelink.azurewebsites.net"
+          }
+      }
     },
     "variables": {
         "containerSubnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('guacamoleSubnetName'))]",
@@ -142,27 +172,19 @@
                 },
                 "subnets": [
                     {
-                        "name": "[parameters('guacamoleSubnetName')]",
-                        "properties": {
-                            "addressPrefix": "[parameters('guacamoleSubnetAddressPrefix')]",
-                            "networkSecurityGroup": {
-                              "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('guacamoleSubnetNSGName'))]"
-                            },
-                        "delegations": [
-                          {
-                            "name": "container",
-                            "properties": {
-                              "serviceName": "Microsoft.ContainerInstance/containerGroups"
-                            }
-                          }
-                        ]
-                        }
-                    },
-
-                    {
+                      "condition": "[equals(parameters('publicWebApp'), 'no')]",
                       "name": "[parameters('gatewaySubnetName')]",
                       "properties": {
                           "addressPrefix": "[parameters('gatewaySubnetAddressPrefix')]",
+                          "privateEndpointNetworkPolicies": "Disabled"
+                      }
+                    },
+                    {
+                      "condition": "[equals(parameters('publicWebApp'), 'yes')]",
+                      "name": "[parameters('gatewaySubnetName')]",
+                      "properties": {
+                          "addressPrefix": "[parameters('gatewaySubnetAddressPrefix')]",
+                          "privateEndpointNetworkPolicies": "Disabled",
                           "networkSecurityGroup": {
                             "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('gatewaySubnetNSGName'))]"
                           },
@@ -175,12 +197,30 @@
                         }
                       ]
                       }
+                    },
+                    {
+                      "name": "[parameters('guacamoleSubnetName')]",
+                      "properties": {
+                          "addressPrefix": "[parameters('guacamoleSubnetAddressPrefix')]",
+                          "privateEndpointNetworkPolicies": "Disabled",
+                          "networkSecurityGroup": {
+                            "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('guacamoleSubnetNSGName'))]"
+                          },
+                      "delegations": [
+                        {
+                          "name": "container",
+                          "properties": {
+                            "serviceName": "Microsoft.ContainerInstance/containerGroups"
+                          }
+                        }
+                      ]
+                      }
                   }
-
                 ]
             }
         },       
         {
+          "condition": "[equals(parameters('publicWebApp'), 'yes')]",
           "type": "Microsoft.Network/networkSecurityGroups",
           "apiVersion": "2022-09-01",
           "name": "[parameters('gatewaySubnetNSGName')]",
@@ -278,6 +318,57 @@
           }
         },
         {
+          "condition": "[equals(parameters('publicWebApp'), 'no')]",
+          "type": "Microsoft.Web/sites",
+          "apiVersion": "2022-09-01",
+          "name": "[parameters('gatewayWebAppName')]",
+          "location": "[ResourceGroup().location]",
+          "kind": "app,linux,container",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]"
+          ],
+          "properties": {
+            "name": "[parameters('gatewayWebAppName')]",
+            "http20Enabled": true,
+            "httpsOnly": true,
+            "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
+            "siteConfig": {
+              "linuxFxVersion": "[concat ('DOCKER|juriba/appmgateway:', parameters('gatewayImageName'))]",
+              "alwaysOn": true,
+              "http20Enabled": true,
+              "minTlsVersion": "1.2",
+              "healthCheckPath": "/vnc/",
+              "ftpsState": "Disabled",
+              "cors": {
+                "allowedOrigins": ["[concat ('https://', parameters('customerName'), '.appm.juriba.app')]"],
+                "supportCredentials": "true"
+              },
+              "appSettings": [
+                {
+                  "name": "WEBSITES_ENABLE_APP_SERVICE_STORAGE",
+                  "value": "false"
+                },
+                {
+                  "name": "APPM_USERNAME",
+                  "value": "[parameters('diagnosticUsername')]"
+                },
+                {
+                  "name": "APPM_PASSWORD",
+                  "value": "[parameters('diagnosticPassword')]"
+                },
+                {
+                  "name": "APPM_HEXKEY",
+                  "value": "[parameters('gatewayEncryptionKey')]"
+                }
+              ]
+            }
+          },
+          "identity": {
+            "type": "SystemAssigned"
+          }
+        },
+        {
+          "condition": "[equals(parameters('publicWebApp'), 'yes')]",
           "type": "Microsoft.Web/sites",
           "apiVersion": "2022-09-01",
           "name": "[parameters('gatewayWebAppName')]",
@@ -300,7 +391,7 @@
               "healthCheckPath": "/vnc/",
               "ftpsState": "Disabled",
               "cors": {
-                "allowedOrigins": "[parameters('appmWebsiteAddress')]",
+                "allowedOrigins": ["[concat ('https://', parameters('customerName'), '.appm.juriba.app')]"],
                 "supportCredentials": "true"
               },
               "appSettings": [
@@ -373,7 +464,81 @@
                 ]
               }
             }
-          }
+          },
+          {
+            "condition": "[equals(parameters('publicWebApp'), 'no')]",
+            "type": "Microsoft.Network/privateEndpoints",
+            "apiVersion": "2019-04-01",
+            "name": "[parameters('privateEndpoint_name')]",
+            "location": "[ResourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('gatewayWebAppName'))]"
+            ],
+            "properties": {
+                "subnet": {
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('gatewaySubnetName'))]"
+                },
+                "privateLinkServiceConnections": [
+                    {
+                        "name": "[parameters('privateLinkConnection_name')]",
+                        "properties": {
+                            "privateLinkServiceId": "[resourceId('Microsoft.Web/sites', parameters('gatewayWebAppName'))]",
+                            "groupIds": [
+                                "sites"
+                            ]
+                        }
+                    }
+                ]
+            } 
+          },
+          {
+            "condition": "[equals(parameters('publicWebApp'), 'no')]",
+            "type": "Microsoft.Network/privateDnsZones",
+            "apiVersion": "2018-09-01",
+            "name": "[parameters('privateDNSZone_name')]",
+            "location": "global",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+            ] 
+          },
+          {
+            "condition": "[equals(parameters('publicWebApp'), 'no')]",
+            "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+            "apiVersion": "2018-09-01",
+            "name": "[concat(parameters('privateDNSZone_name'), '/', parameters('privateDNSZone_name'), '-link')]",
+            "location": "global",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/privateDnsZones', parameters('privateDNSZone_name'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+            ],
+            "properties": {
+                "registrationEnabled": false,
+                "virtualNetwork": {
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+                }
+            }
+          },
+          {
+            "condition": "[equals(parameters('publicWebApp'), 'no')]",
+            "type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
+            "apiVersion": "2020-03-01",
+            "name": "[concat(parameters('privateEndpoint_name'),'/dnsgroupname')]",
+            "location": "[ResourceGroup().location]",
+            "dependsOn": [
+               "[resourceId('Microsoft.Network/privateDnsZones', parameters('privateDNSZone_name'))]",
+               "[resourceId('Microsoft.Network/privateEndpoints' , parameters('privateEndpoint_name'))]"
+             ],
+            "properties": {
+                "privateDnsZoneConfigs": [
+                    {
+                        "name": "config1",
+                        "properties": {
+                             "privateDnsZoneId": "[resourceId('Microsoft.Network/privateDnsZones', parameters('privateDNSZone_name'))]"
+                        }
+                    }
+                ]
+            }
+          }   
     ],
     "outputs": {
         "containerIPv4Address": {
