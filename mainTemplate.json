@@ -126,7 +126,7 @@
     },
     "resources": [
         {
-            "condition": "[equals(parameters('virtualNetworkNewOrExisting'), 'new')]",
+            // "condition": "[equals(parameters('virtualNetworkNewOrExisting'), 'new')]",
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2022-09-01",
             "name": "[parameters('virtualNetworkName')]",
@@ -179,7 +179,52 @@
 
                 ]
             }
-        },       
+        },
+      //   {
+      //     "condition": "[equals(parameters('virtualNetworkNewOrExisting'), 'existing)]",
+      //     "apiVersion": "2020-06-01",
+      //     "type": "Microsoft.Resources/deployments",
+      //     "name": "updateVNet",
+      //     "dependsOn": [
+      //         "gatewaySubnetName"
+      //     ],
+      //     "properties": {
+      //         "mode": "Incremental",
+      //         "parameters": {},
+      //         "template": {
+      //             "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+      //             "contentVersion": "1.0.0.1",
+      //             "parameters": {},
+      //             "variables": {},
+      //             "resources": [
+      //                 {
+      //                     "apiVersion": "2020-05-01",
+      //                     "name": "[parameters('virtualNetworkName')]",
+      //                     "location": "[resourceGroup().location]",
+      //                     "type": "Microsoft.Network/virtualNetworks",
+      //                     "properties": {
+      //                         "addressSpace": "[parameters('virtualNetworkAddressPrefixes')]", 
+      //                         "subnets": [
+      //                             {
+      //                                 "name": "[reference('virtualNetworkName').subnets[0].name]",
+      //                                 "properties": {
+      //                                     "addressPrefix": "[reference('virtualNetworkName').subnets[0].properties.addressPrefix]"
+      //                                 }
+      //                             },
+      //                             {
+      //                                 "name": "secondSubnet",
+      //                                 "properties": {
+      //                                     "addressPrefix": "10.0.1.0/24"
+      //                                 }
+      //                             }
+      //                         ]
+      //                     }
+      //                 }
+      //             ],
+      //             "outputs": {}
+      //         }
+      //     }
+      // },       
         {
           "type": "Microsoft.Network/networkSecurityGroups",
           "apiVersion": "2022-09-01",
