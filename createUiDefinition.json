@@ -36,7 +36,7 @@
                                     "hideExisting": false
                                 },
                                 "subnets": {
-                                    "gatewaySubnet": {
+                                    "gatewaySubnetName": {
                                         "label": "Gateway subnet",
                                         "defaultValue": {
                                             "name": "gateway-snet",
@@ -48,7 +48,7 @@
                                             "requireContiguousAddresses": true
                                         }
                                     },
-                                    "guacamoleSubnet": {
+                                    "guacamoleSubnetName": {
                                         "label": "Guacamole subnet",
                                         "defaultValue": {
                                             "name": "guacamole-snet",
