@@ -284,8 +284,7 @@
           "kind": "app,linux,container",
           "dependsOn": [
             "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
-            "[resourceId('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
-            "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('gatewaySubnetName'))]"  
+            "[resourceId('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
           ],
           "properties": {
             "name": "[parameters('gatewayWebAppName')]",
