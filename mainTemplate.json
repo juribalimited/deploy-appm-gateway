@@ -171,7 +171,6 @@
                         ]
                         }
                     },
-
                     {
                       "name": "[parameters('gatewaySubnetName')]",
                       "properties": {
@@ -188,9 +187,14 @@
                         }
                       ]
                       }
-                  }
-
-                ]
+                    },
+                    {
+                      "name": "[parameters('guestSubnetName')]",
+                      "properties": {
+                          "addressPrefix": "[parameters('guestSubnetAddressPrefix')]",
+                      }
+                    }
+              ]
             }
         },
         {
