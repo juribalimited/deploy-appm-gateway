@@ -59,9 +59,9 @@
         },
         "guestSubnetName": {
           "type": "string",
-          "defaultValue": "gateway-snet",
+          "defaultValue": "guest-snet",
           "metadata": {
-            "description": "Defines the name of the virtual network subnet where the webapp will be located"
+            "description": "Defines the name of the virtual network subnet where the guest VM's will be located"
           }
         },
         "guestSubnetAddressPrefix": {
