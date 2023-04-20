@@ -191,10 +191,10 @@
                     {
                       "name": "[parameters('guestSubnetName')]",
                       "properties": {
-                          "addressPrefix": "[parameters('guestSubnetAddressPrefix')]",
+                          "addressPrefix": "[parameters('guestSubnetAddressPrefix')]"
                       }
                     }
-              ]
+                ]
             }
         },
         {
@@ -277,8 +277,6 @@
             ]
         }
         },
-
-
         {
           "type": "Microsoft.Web/serverfarms",
           "apiVersion": "2022-09-01",
