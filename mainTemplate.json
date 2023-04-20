@@ -57,6 +57,20 @@
             "description": "Defines the network address subnet where the webapp will reside. This should be in CIDR notation, for example 10.0.2.0/24"
           }
         },
+        "guestSubnetName": {
+          "type": "string",
+          "defaultValue": "gateway-snet",
+          "metadata": {
+            "description": "Defines the name of the virtual network subnet where the webapp will be located"
+          }
+        },
+        "guestSubnetAddressPrefix": {
+          "type": "string",
+          "defaultValue": "10.0.3.0/24",
+          "metadata": {
+            "description": "Defines the network address subnet where the guest VM's will reside. This should be in CIDR notation, for example 10.0.3.0/24"
+          }
+        },
         "guacamoleInstanceName": {
             "type": "string",
             "defaultValue": "guacamole-ci",

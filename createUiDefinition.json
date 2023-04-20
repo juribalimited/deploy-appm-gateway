@@ -59,6 +59,18 @@
                                             "minAddressCount": 8,
                                             "requireContiguousAddresses": true
                                         }
+                                    },
+                                    "guestSubnetName": {
+                                        "label": "Guest subnet",
+                                        "defaultValue": {
+                                            "name": "guest-snet",
+                                            "addressPrefixSize": "/24"
+                                        },
+                                        "constraints": {
+                                            "minAddressPrefixSize": "/24",
+                                            "minAddressCount": 12,
+                                            "requireContiguousAddresses": true
+                                        }
                                     }
                                 },
                                 "visible": true
@@ -296,6 +308,8 @@
             "gatewaySubnetAddressPrefix": "[steps('networkingConfig').networkSection.vnet.subnets.gatewaySubnetName.addressPrefix]",
             "guacamoleSubnetName": "[steps('networkingConfig').networkSection.vnet.subnets.guacamoleSubnetName.name]",
             "guacamoleSubnetAddressPrefix": "[steps('networkingConfig').networkSection.vnet.subnets.guacamoleSubnetName.addressPrefix]",
+            "guestSubnetName": "[steps('networkingConfig').networkSection.vnet.subnets.guestSubnetName.name]",
+            "guestSubnetAddressPrefix": "[steps('networkingConfig').networkSection.vnet.subnets.guestSubnetName.addressPrefix]",
             "gatewaySubnetNSGName": "[steps('networkingConfig').nsgSection.gatewaySubnetNSGName]",
             "guacamoleSubnetNSGName": "[steps('networkingConfig').nsgSection.guacamoleSubnetNSGName]",
             "gatewayWebAppName": "[steps('gatewayConfig').containerSection.gatewayWebAppName]",
