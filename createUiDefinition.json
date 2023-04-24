@@ -59,7 +59,7 @@
                                             "minAddressCount": 12,
                                             "requireContiguousAddresses": true
                                         }
-                                    }
+                                    },
                                     "guacamoleSubnetName": {
                                         "label": "Guacamole subnet",
                                         "defaultValue": {
