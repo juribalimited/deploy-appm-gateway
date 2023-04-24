@@ -48,18 +48,6 @@
                                             "requireContiguousAddresses": true
                                         }
                                     },
-                                    "guacamoleSubnetName": {
-                                        "label": "Guacamole subnet",
-                                        "defaultValue": {
-                                            "name": "guacamole-snet",
-                                            "addressPrefixSize": "/26"
-                                        },
-                                        "constraints": {
-                                            "minAddressPrefixSize": "/26",
-                                            "minAddressCount": 8,
-                                            "requireContiguousAddresses": true
-                                        }
-                                    },
                                     "guestSubnetName": {
                                         "label": "Guest subnet",
                                         "defaultValue": {
@@ -72,6 +60,19 @@
                                             "requireContiguousAddresses": true
                                         }
                                     }
+                                    "guacamoleSubnetName": {
+                                        "label": "Guacamole subnet",
+                                        "defaultValue": {
+                                            "name": "guacamole-snet",
+                                            "addressPrefixSize": "/26"
+                                        },
+                                        "constraints": {
+                                            "minAddressPrefixSize": "/26",
+                                            "minAddressCount": 8,
+                                            "requireContiguousAddresses": true
+                                        }
+                                    }
+
                                 },
                                 "visible": true
                             }
