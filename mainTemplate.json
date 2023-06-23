@@ -83,14 +83,14 @@
           "defaultValue": "appm-gateway",
           "metadata": {
             "description": "Defines the name for Azure gateway web app"
-          } 
+          }
         },
         "gatewaySubnetNSGName": {
           "type": "string",
           "defaultValue": "gateway-snet-nsg",
           "metadata": {
             "description": "Defines the name for network security group used for Gateway WebApp"
-          } 
+          }
         },
 
         "guacamoleSubnetNSGName": {
@@ -98,13 +98,13 @@
           "defaultValue": "guacamole-snet-nsg",
           "metadata": {
             "description": "Defines the name for network security group used for Container"
-          } 
+          }
         },
         "appmWebsiteAddress": {
           "type": "string",
           "metadata": {
             "description": "Customer identifier. This will be used as part of the Gateway WebApp configuration. This can be found from Appm Application web address, for example %customerName%.appm.juriba.app"
-          } 
+          }
         },
 
         "gatewayImageName": {
@@ -112,25 +112,25 @@
           "defaultValue": "sha-d9174c1",
           "metadata": {
             "description": "Defines the image to be used for Gateway container. This will default to latest available. Full list can be found here https://hub.docker.com/repository/docker/juriba/appmgateway/general"
-          } 
+          }
         },
         "diagnosticUsername": {
           "type": "string",
           "metadata": {
             "description": "Value from AppM application to be used in Gateway container."
-          } 
+          }
         },
         "diagnosticPassword": {
           "type": "securestring",
           "metadata": {
             "description": "Value from AppM application to be used in Gateway container."
-          } 
-        },  
+          }
+        },
         "gatewayEncryptionKey": {
           "type": "securestring",
           "metadata": {
             "description": "Value from AppM application to be used in Gateway container."
-          } 
+          }
         }
     },
     "variables": {
@@ -316,7 +316,7 @@
               "healthCheckPath": "/vnc/",
               "ftpsState": "Disabled",
               "cors": {
-                "allowedOrigins": ["[parameters('appmWebsiteAddress')]"],
+                "allowedOrigins": "[concat ('https://', [parameters('appmWebsiteAddress'))]",
                 "supportCredentials": "true"
               },
               "appSettings": [
@@ -346,11 +346,11 @@
         {
             "type": "Microsoft.ContainerInstance/containerGroups",
             "apiVersion": "2022-09-01",
-            "name": "[parameters('guacamoleInstanceName')]", 
+            "name": "[parameters('guacamoleInstanceName')]",
             "location": "[ResourceGroup().location]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
-            ],          
+            ],
             "properties": {
               "containers": [
                 {

@@ -93,7 +93,7 @@
                                 "constraints": {
                                     "required": true,
                                     "regex": "^[a-z0-9A-Z-]{3,40}$",
-                                    "validationMessage": "The security group name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."          
+                                    "validationMessage": "The security group name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."
                                 }
                             },
                             {
@@ -105,7 +105,7 @@
                                 "constraints": {
                                     "required": true,
                                     "regex": "^[a-z0-9A-Z-]{3,40}$",
-                                    "validationMessage": "The security group name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."          
+                                    "validationMessage": "The security group name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."
                                 }
                             }
                         ],
@@ -131,7 +131,7 @@
                                 "constraints": {
                                     "required": true,
                                     "regex": "^[a-z]{3,10}.appm.juriba.app$",
-                                    "validationMessage": "The AppM site must be in format %customername%.appm.juriba.app. Customer name element of site must be between 3 and 10 characters"          
+                                    "validationMessage": "The AppM site must be in format %customername%.appm.juriba.app. Customer name element of site must be between 3 and 10 characters"
                                 }
                             },
                             {
@@ -165,8 +165,8 @@
                                 "name": "gatewayWebAppName",
                                 "type": "Microsoft.Common.TextBox",
                                 "label": "Gateway WebApp Name",
-                                "toolTip": "Defines the name for Azure gateway web app address. For example %gateway_webapp_name%.azurewebsites.net",
-                                "placeholder": "%gateway_webapp_name%.azurewebsites.net",
+                                "toolTip": "Defines the name for Azure gateway web app address. For example %gateway_webapp_name%",
+                                "placeholder": "%gateway_webapp_name%",
                                 "constraints": {
                                   "validations": [
                                     {
@@ -231,7 +231,7 @@
                                 },
                                 "toolTip": "",
                                 "constraints": {
-                                    "required": true        
+                                    "required": true
                                 }
                             }
                         ],
@@ -260,7 +260,7 @@
                                 "constraints": {
                                     "required": true,
                                     "regex": "^[a-z0-9A-Z]{3,15}$",
-                                    "validationMessage": "The username must be between 3 and 15 characters long and contain letters and numbers only."          
+                                    "validationMessage": "The username must be between 3 and 15 characters long and contain letters and numbers only."
                                 }
                             },
                             {
@@ -274,7 +274,7 @@
                                 "constraints": {
                                     "required": true,
                                     "regex": "^[a-z0-9A-Z]{3,30}$",
-                                    "validationMessage": "The password must be between 3 and 30 characters long and contain letters and numbers only."          
+                                    "validationMessage": "The password must be between 3 and 30 characters long and contain letters and numbers only."
                                 }
                             }
                         ],
@@ -285,7 +285,7 @@
             {
                 "name": "guacamoleConfig",
                 "label": "Apache Guacamole",
-                "elements": [            
+                "elements": [
                     {
                         "name": "guacamoleInstanceName",
                         "type": "Microsoft.Common.TextBox",
@@ -295,7 +295,7 @@
                         "constraints": {
                             "required": true,
                             "regex": "^[a-z0-9A-Z-]{3,40}$",
-                            "validationMessage": "The instance name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."          
+                            "validationMessage": "The instance name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."
                         }
                     }
                 ]
