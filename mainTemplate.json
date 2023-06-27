@@ -316,7 +316,7 @@
               "healthCheckPath": "/vnc/",
               "ftpsState": "Disabled",
               "cors": {
-                "allowedOrigins": "[concat ('https://', [parameters('appmWebsiteAddress')])]",######
+                "allowedOrigins": "[concat ('https://', [parameters('appmWebsiteAddress')])]",
                 "supportCredentials": "true"
               },
               "appSettings": [
