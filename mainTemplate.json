@@ -136,8 +136,7 @@
     "variables": {
         "containerSubnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('guacamoleSubnetName'))]",
         "gatewaySubnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('gatewaySubnetName'))]",
-        "appServicePlanName": "[concat(parameters('gatewayWebAppName'), '-asp')]",
-        "CORS": "[concat ('https://', parameters('appmWebsiteAddress'))]"
+        "appServicePlanName": "[concat(parameters('gatewayWebAppName'), '-asp')]"
     },
     "resources": [
         {
@@ -317,7 +316,7 @@
               "healthCheckPath": "/vnc/",
               "ftpsState": "Disabled",
               "cors": {
-                "allowedOrigins": "[variables('CORS')]",
+                "allowedOrigins": ["[concat('https://', parameters('appmWebsiteAddress'))]"],
                 "supportCredentials": "true"
               },
               "appSettings": [
