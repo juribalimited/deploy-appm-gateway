@@ -139,13 +139,13 @@
                                 "type": "Microsoft.Common.DropDown",
                                 "label": "AppM version",
                                 "placeholder": "",
-                                "defaultValue": "Latest",
+                                "defaultValue": "latest",
                                 "toolTip": "",
                                 "constraints": {
                                     "allowedValues": [
                                         {
-                                            "label": "Latest",
-                                            "value": "Latest"
+                                            "label": "latest",
+                                            "value": "latest"
                                         }
                                     ],
                                     "required": true
