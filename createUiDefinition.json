@@ -145,7 +145,7 @@
                                     "allowedValues": [
                                         {
                                             "label": "Latest",
-                                            "value": "sha-d9174c1"
+                                            "value": "Latest"
                                         }
                                     ],
                                     "required": true
