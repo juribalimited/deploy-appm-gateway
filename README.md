@@ -1,14 +1,16 @@
 # AppM Gateway - One click deploy
 
-Juriba offer a one click deploy template to create a desktop gateway for use with AppM. The desktop gateway is used to facilitate access between the main AppM application and guest VM's by creating an Azure Web App which allows communication to Guest VM's on a private subnet.
+Juriba offer a one click deploy template to create the desktop gateway infrastructure for use with AppM. The desktop gateway is used to facilitate access between the main AppM application and guest VM's by creating a set of resources which allows communication to Guest VM's on a private subnet.
+The one click deploy template creates a Container instance, Azure Web App and all associated networking infrastructure to setup connectivity quickly and easily. However customers are **not required** to use the one click deploy template. If they want to consume the container images individually leveraging a different container engine/runtime the images can be pulled from here:
+ - [AppM Gateway](https://hub.docker.com/?namespace=juriba)
+ - [Guacd](https://hub.docker.com/r/guacamole/guacd)
+
 
 ## Gateway infrastructure
 ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/26cba5f0-a867-4fe1-83d4-19ac0a109d30)
 
 ## Usage
 
-
-The one click deploy template creates a Guacamole container, Azure Web App and all associated networking infrastructure to setup connectivity quickly and easily. However customers are not required to use the one click deploy template. If they want to build and host their own gateway then they can use the container images hosted publically here - https://hub.docker.com/?namespace=juriba
 
 1. To use the one click deploy template click the "Deploy to Azure" below:
 
