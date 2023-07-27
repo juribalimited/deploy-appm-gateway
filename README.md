@@ -17,26 +17,32 @@ The one click deploy template creates a Container Instance, Azure Web App and al
 - [![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fjuribalimited%2Fdeploy-appm-gateway%2Fmain%2FmainTemplate.json/createUIDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2Fjuribalimited%2Fdeploy-appm-gateway%2Fmain%2FcreateUiDefinition.json)
 - [![Visualize](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/visualizebutton.svg?sanitize=true)](http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fjuribalimited%2Fdeploy-appm-gateway%2Fmain%2FmainTemplate.json)
 
-2. The initial panel allows you to select which Azure subscription you want to deploy into. You can also select an existing resource group or create a new one.
-    * Juriba **suggest's** creating a new resource group with a relevant name so that there is a clear separation for these Azure resources.
+2. Basics
+
+    The initial tab allows you to select which Azure subscription you want to deploy into. You can also select an existing resource group or create a new one.
+    - `Region` - This will be the geographical location of the resources. **Any virtual machines** will also need to be deployed into the matching region.
+    * Juriba **suggests** creating a new resource group with a relevant name so that there is a clear separation for these Azure resources.
+
     ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/f7e2831f-db99-4347-81fe-a25d244044d5)
 
 
-3. The second panel allows you to select an existing network or create a new virtual network for gateway use. By default a new virtual network and subnets are created, however using the drop down menu you can select an existing network held within your Azure subscription. The virtual network requires three subnets for gateway resources, guest VM's and the guacamole container. You can also amend the Network Security Group names on this page if required.
-    * Juriba **suggest's** creating a new network as the subnet settings <u>**will overwrite**</u> any existing subnets held within the network selected.
+3. Networking
+
+    The networking tab allows you to select an existing network or **create a new virtual network**. By default a new virtual network and subnets are created, however using the drop down menu you can select an existing network held within your Azure subscription. The virtual network requires three subnets for gateway resources, guest virtual machines and the guacamole container. You can also amend the Network Security Group names on this page if required.
+    * Juriba **suggests** creating a new network as the subnet settings <u>**will overwrite**</u> any existing subnets held within the network selected.
     ```diff
     - Any subnets on an existing network will be removed!
     ```
 
-
-![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/21d53c53-387a-4a32-b62a-34483d822dda)
+    ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/21d53c53-387a-4a32-b62a-34483d822dda)
 
 4.  AppM Desktop Gateway
 
     The third panel askes for configuration relating to the configuration of the gateway.
     - `AppM Website Address` - This will be the web address you use to access AppM. This should not include anything after the first `/` within the url.
     - `AppM Version` - This is the version of AppM being run, currently this will always default to latest.
-    - `Gateway WebApp Name` This is the name of the resource cerated within azure that you want to use for your desktop gateway. By default this is exposed to the internet with the `azurewebsites.net` suffix. Once entered please click out of the entry box, this will start a check to ensure that address is available. If available you will see a green tick, otherwise you will receive an erorr message (examples below).
+    - `Gateway WebApp Name` This is the name of the resource craated within azure that you want to use for your desktop gateway. By default this **is** exposed to the internet with the `azurewebsites.net` suffix. Once entered please click out of the entry box, this will start a check to ensure that address is available. If available you will see a green tick, otherwise you will receive an error message (examples below).
+    * Juriba **suggests** that the Azure Web Application (Desktop Gateway) is configured with private networking or IP restrictions to further secure the gateway.
 
    ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/59ee9fb1-e8f4-4146-ab35-467abc3ea444)
 
@@ -56,19 +62,23 @@ The one click deploy template creates a Container Instance, Azure Web App and al
 
    ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/119e0081-a39a-49b6-99ab-9b92e03a9430)
 
-5. The fourth panel enables you to set a name for the Guacamole container instance.
+5. Apache Guacamole
 
-![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/aa546a13-5193-4bf2-984d-cd4eb513df6e)
+    The fourth panel enables you to set a name for the Guacamole container instance.
 
-6. Once all details have been entered then click Review+create to deploy all objects.
+    ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/aa546a13-5193-4bf2-984d-cd4eb513df6e)
 
-   Once complete then you can view your Web App details from the Overview page.
+6. Review and create
 
-   ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/02d00444-f7ea-4902-a744-86ff44e5d11b)
+    Once all details have been entered then click Review+create to deploy all objects.
 
-   The web App will only accept connections from your AppM application. This be verified within the CORS section
+    Once complete then you can view your Web App details from the Overview page.
 
-   ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/635db2dd-bc96-4807-8dd1-2f71e583afe6)
+    ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/02d00444-f7ea-4902-a744-86ff44e5d11b)
+
+    The web App will only accept connections from your AppM application. This be verified within the CORS section
+
+    ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/635db2dd-bc96-4807-8dd1-2f71e583afe6)
 
 7. Once created please ensure that the Guacamole IP within your AppM Desktop Gateway Integration is correct. This can be found by checking the Guacamole container and noting it's IP.
 
