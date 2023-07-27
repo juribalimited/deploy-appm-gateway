@@ -130,7 +130,7 @@
                                 "toolTip": "This will be used to allow communication from main AppM website. Please enter in format %customername%.appm.juriba.app",
                                 "constraints": {
                                     "required": true,
-                                    "regex": "^[a-z]{3,10}.appm.juriba.app$",
+                                    "regex": "^[a-z0-9]{3,10}.appm.juriba.app$",
                                     "validationMessage": "The AppM site must be in format %customername%.appm.juriba.app. Customer name element of site must be between 3 and 10 characters"
                                 }
                             },
