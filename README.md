@@ -9,29 +9,35 @@ The one click deploy template creates a Guacamole container, Azure Web App and a
 To use the one click deploy template click the "Deploy to Azure" button above.
 
 1. The initial panel allows you to select which Azure subscription you want to deploy in to. You can also select an existing resource group or create a new one to house resources.
-2. 
-![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/e8b84bed-88bf-467c-9e60-2503842b78f7)
+
 ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/f7e2831f-db99-4347-81fe-a25d244044d5)
 
 
-3. The second panel allows you to select an existing network or create a new virtual network for gateway use. By default a new virtual network and subnets are created, however using the drop down you can select an existing network held within your Azure subscription. The virtual network requires three subnets for 
-   gateway resources, guest VM's and the guacamole container. We would suggest creating a new network for simplicity of use but this is not mandatory. You can also amend the Network Security Group names on this page if required.
+2. The second panel allows you to select an existing network or create a new virtual network for gateway use. By default a new virtual network and subnets are created, however using the drop down menu you can select an existing network held within your Azure subscription. The virtual network requires three subnets for gateway resources, guest VM's and the guacamole container. We would suggest creating a new network for simplicity of use but this is not mandatory. You can also amend the Network Security Group names on this page if required.
+
 
 ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/21d53c53-387a-4a32-b62a-34483d822dda)
 
-   The third panel requires you to enter your main AppM website address. This will be the web address you use to access your AppM environment. 
+3.  The third panel requires you to enter your main AppM website address. This will be the web address you use to access your AppM environment. 
+
    The AppM version is the guacamole image that we want to use - currently this will always default to latest.
-   The Gateway WebApp Name is the internet accessible address that you want to use for your desktop gateway. Once entered please click out of the entry box, this will start a check to ensure that address is available. If available you will see a green tick., otherwise you will receive an erorr message (examples 
-   below)
+
+   The Gateway WebApp Name is the internet accessible address that you want to use for your desktop gateway, azurewebsites.net will automatically be appended to whatever you enter. Once entered please click out of the entry box, this will start a check to ensure that address is available. If available you will see a green tick, otherwise you will receive an erorr message (examples 
+   below). 
 
    ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/59ee9fb1-e8f4-4146-ab35-467abc3ea444)
 
    ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/c4fbf88b-56a0-44d7-88c9-34ebe54071ed)
 
-   The Encryption Key can be obtained from the main AppM application under System > Integrations > Desktop Gateways. Enter the details that you know here and then click update, You wil not be able to test connection at this point as we have not completed the desktop gateway deployment. Once you have clicked update 
+   The Encryption Key can be obtained from the main AppM application under System > Integrations > Desktop Gateways.
+  
+   Enter the details that you know here and then click update, You wil not be able to test connection at this point as we have not completed the desktop gateway deployment. Once you have clicked update 
    an encryption hex key will be created for you. Please enter this into the Encryption key fields.
 
    ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/fd095519-53f0-4c81-a56b-366f8dbb9028)
+   ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/770ef24c-c60f-4a4d-b665-4a0799df931f)
+
+
 
    The final fields for Username and Password will need to be filled in. These details won't be needed for general AppM usage but may be needed when troubleshooting connectivity issues between AppM and Guest VM's. Please store these details securely should you need them in the future.
 
