@@ -44,17 +44,17 @@ The one click deploy template creates a Container Instance, Azure Web App and al
     - `Gateway WebApp Name` This is the name of the resource craated within azure that you want to use for your desktop gateway. By default this **is** exposed to the internet with the `azurewebsites.net` suffix. Once entered please click out of the entry box, this will start a check to ensure that address is available. If available you will see a green tick, otherwise you will receive an error message (examples below).
     * Juriba **suggests** that the Azure Web Application (Desktop Gateway) is configured with private networking or IP restrictions to further secure the gateway.
 
-   ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/59ee9fb1-e8f4-4146-ab35-467abc3ea444)
+    ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/59ee9fb1-e8f4-4146-ab35-467abc3ea444)
 
-   ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/c4fbf88b-56a0-44d7-88c9-34ebe54071ed)
+    ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/c4fbf88b-56a0-44d7-88c9-34ebe54071ed)
 
-   The Encryption Key can be obtained from the main AppM application under System > Integrations > Desktop Gateways.
+    The Encryption Key can be obtained from the main AppM application under System > Integrations > Desktop Gateways.
 
-   Enter the details that you know here and then click update, You wil not be able to test connection at this point as we have not completed the desktop gateway deployment. Once you have clicked update
-   an encryption hex key will be created for you. Please enter this into the Encryption key fields.
+    Enter the details that you know here and then click update, You wil not be able to test connection at this point as we have not completed the desktop gateway deployment. Once you have clicked update
+    an encryption hex key will be created for you. Please enter this into the Encryption key fields.
 
-   ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/fd095519-53f0-4c81-a56b-366f8dbb9028)
-   ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/770ef24c-c60f-4a4d-b665-4a0799df931f)
+    ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/fd095519-53f0-4c81-a56b-366f8dbb9028)
+    ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/770ef24c-c60f-4a4d-b665-4a0799df931f)
 
 
 
