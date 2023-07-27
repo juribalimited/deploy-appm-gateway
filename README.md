@@ -1,8 +1,8 @@
 # AppM Gateway - One click deploy
 
 Juriba offer a one click deploy template to create the desktop gateway infrastructure for use with AppM. The desktop gateway is used to facilitate access between the main AppM application and guest VM's by creating a set of resources which allows communication to Guest VM's on a private subnet.
-The one click deploy template creates a Container instance, Azure Web App and all associated networking infrastructure to setup connectivity quickly and easily. However customers are **not required** to use the one click deploy template. If they want to consume the container images individually leveraging a different container engine/runtime the images can be pulled from here:
- - [AppM Gateway](https://hub.docker.com/?namespace=juriba)
+The one click deploy template creates a Container Instance, Azure Web App and all associated networking infrastructure to setup connectivity quickly and easily. However customers are **not required** to use the one click deploy template. If they want to consume the container images individually leveraging a different container engine/runtime the images can be pulled from here:
+ - [AppM Gateway](https://hub.docker.com/r/juriba/appmgateway)
  - [Guacd](https://hub.docker.com/r/guacamole/guacd)
 
 
@@ -17,17 +17,18 @@ The one click deploy template creates a Container instance, Azure Web App and al
 - [![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fjuribalimited%2Fdeploy-appm-gateway%2Fmain%2FmainTemplate.json/createUIDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2Fjuribalimited%2Fdeploy-appm-gateway%2Fmain%2FcreateUiDefinition.json)
 - [![Visualize](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/visualizebutton.svg?sanitize=true)](http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fjuribalimited%2Fdeploy-appm-gateway%2Fmain%2FmainTemplate.json)
 
-2. The initial panel allows you to select which Azure subscription you want to deploy in to. You can also select an existing resource group or create a new one to house resources.
+2. The initial panel allows you to select which Azure subscription you want to deploy into. You can also select an existing resource group or create a new one.
+- Juriba **suggest's** creating a new resource group with a relevant name so that there is a clear separation for these Azure resources.
 
 ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/f7e2831f-db99-4347-81fe-a25d244044d5)
 
 
-2. The second panel allows you to select an existing network or create a new virtual network for gateway use. By default a new virtual network and subnets are created, however using the drop down menu you can select an existing network held within your Azure subscription. The virtual network requires three subnets      for gateway resources, guest VM's and the guacamole container. We would suggest creating a new network as the subnet settings will overwrite any existing subnets held within the network if they don't match this pattern. You can also amend the Network Security Group names on this page if required.
+3. The second panel allows you to select an existing network or create a new virtual network for gateway use. By default a new virtual network and subnets are created, however using the drop down menu you can select an existing network held within your Azure subscription. The virtual network requires three subnets      for gateway resources, guest VM's and the guacamole container. We would suggest creating a new network as the subnet settings will overwrite any existing subnets held within the network if they don't match this pattern. You can also amend the Network Security Group names on this page if required.
 
 
 ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/21d53c53-387a-4a32-b62a-34483d822dda)
 
-3.  The third panel requires you to enter your main AppM website address. This will be the web address you use to access your AppM environment.
+4.  The third panel requires you to enter your main AppM website address. This will be the web address you use to access your AppM environment.
 
    The AppM version is the guacamole image that we want to use - currently this will always default to latest.
 
@@ -52,11 +53,11 @@ The one click deploy template creates a Container instance, Azure Web App and al
 
    ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/119e0081-a39a-49b6-99ab-9b92e03a9430)
 
-4. The fourth panel enables you to set a name for the Guacamole container instance.
+5. The fourth panel enables you to set a name for the Guacamole container instance.
 
 ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/aa546a13-5193-4bf2-984d-cd4eb513df6e)
 
-5. Once all details have been entered then click Review+create to deploy all objects.
+6. Once all details have been entered then click Review+create to deploy all objects.
 
    Once complete then you can view your Web App details from the Overview page.
 
@@ -66,7 +67,7 @@ The one click deploy template creates a Container instance, Azure Web App and al
 
    ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/635db2dd-bc96-4807-8dd1-2f71e583afe6)
 
-6. Once created please ensure that the Guacamole IP within your AppM Desktop Gateway Integration is correct. This can be found by checking the Guacamole container and noting it's IP.
+7. Once created please ensure that the Guacamole IP within your AppM Desktop Gateway Integration is correct. This can be found by checking the Guacamole container and noting it's IP.
 
    ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/885df0f7-ea02-4c45-83b2-7a850abca71c)
 
