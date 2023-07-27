@@ -19,9 +19,7 @@ The one click deploy template creates a Container Instance, Azure Web App and al
 
 2. The initial panel allows you to select which Azure subscription you want to deploy into. You can also select an existing resource group or create a new one.
     * Juriba **suggest's** creating a new resource group with a relevant name so that there is a clear separation for these Azure resources.
-
-
-![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/f7e2831f-db99-4347-81fe-a25d244044d5)
+    ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/f7e2831f-db99-4347-81fe-a25d244044d5)
 
 
 3. The second panel allows you to select an existing network or create a new virtual network for gateway use. By default a new virtual network and subnets are created, however using the drop down menu you can select an existing network held within your Azure subscription. The virtual network requires three subnets for gateway resources, guest VM's and the guacamole container. You can also amend the Network Security Group names on this page if required.
@@ -33,12 +31,12 @@ The one click deploy template creates a Container Instance, Azure Web App and al
 
 ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/21d53c53-387a-4a32-b62a-34483d822dda)
 
-4.  The third panel requires you to enter your main AppM website address. This will be the web address you use to access your AppM environment.
+4.  AppM Desktop Gateway
 
-   The AppM version is the guacamole image that we want to use - currently this will always default to latest.
-
-   The Gateway WebApp Name is the internet accessible address that you want to use for your desktop gateway, azurewebsites.net will automatically be appended to whatever you enter. Once entered please click out of the entry box, this will start a check to ensure that address is available. If available you will see a
-   green tick, otherwise you will receive an erorr message (examples below).
+    The third panel askes for configuration relating to the configuration of the gateway.
+    - `AppM Website Address` - This will be the web address you use to access AppM. This should not include anything after the first `/` within the url.
+    - `AppM Version` - This is the version of AppM being run, currently this will always default to latest.
+    - `Gateway WebApp Name` This is the name of the resource cerated within azure that you want to use for your desktop gateway. By default this is exposed to the internet with the `azurewebsites.net` suffix. Once entered please click out of the entry box, this will start a check to ensure that address is available. If available you will see a green tick, otherwise you will receive an erorr message (examples below).
 
    ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/59ee9fb1-e8f4-4146-ab35-467abc3ea444)
 
