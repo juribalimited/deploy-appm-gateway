@@ -25,7 +25,7 @@ The one click deploy template creates a Container Instance, Azure Web App and al
 
 
 3. The second panel allows you to select an existing network or create a new virtual network for gateway use. By default a new virtual network and subnets are created, however using the drop down menu you can select an existing network held within your Azure subscription. The virtual network requires three subnets for gateway resources, guest VM's and the guacamole container. You can also amend the Network Security Group names on this page if required.
-    * Juriba **suggest's** creating a new network as the subnet settings <u>**will overwrite**</u> any existing subnets held within the network if they don't match this pattern.
+    * Juriba **suggest's** creating a new network as the subnet settings <u>**will overwrite**</u> any existing subnets held within the network selected.
     ```diff
     - Any subnets on an existing network will be removed!
     ```
