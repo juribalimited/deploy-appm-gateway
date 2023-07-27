@@ -18,12 +18,17 @@ The one click deploy template creates a Container Instance, Azure Web App and al
 - [![Visualize](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/visualizebutton.svg?sanitize=true)](http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fjuribalimited%2Fdeploy-appm-gateway%2Fmain%2FmainTemplate.json)
 
 2. The initial panel allows you to select which Azure subscription you want to deploy into. You can also select an existing resource group or create a new one.
-- Juriba **suggest's** creating a new resource group with a relevant name so that there is a clear separation for these Azure resources.
+    * Juriba **suggest's** creating a new resource group with a relevant name so that there is a clear separation for these Azure resources.
+
 
 ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/f7e2831f-db99-4347-81fe-a25d244044d5)
 
 
-3. The second panel allows you to select an existing network or create a new virtual network for gateway use. By default a new virtual network and subnets are created, however using the drop down menu you can select an existing network held within your Azure subscription. The virtual network requires three subnets      for gateway resources, guest VM's and the guacamole container. We would suggest creating a new network as the subnet settings will overwrite any existing subnets held within the network if they don't match this pattern. You can also amend the Network Security Group names on this page if required.
+3. The second panel allows you to select an existing network or create a new virtual network for gateway use. By default a new virtual network and subnets are created, however using the drop down menu you can select an existing network held within your Azure subscription. The virtual network requires three subnets for gateway resources, guest VM's and the guacamole container. You can also amend the Network Security Group names on this page if required.
+    * Juriba **suggest's** creating a new network as the subnet settings <u>**will overwrite**</u> any existing subnets held within the network if they don't match this pattern.
+    ```diff
+    - Any subnets on an existing network will be removed!
+    ```
 
 
 ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/21d53c53-387a-4a32-b62a-34483d822dda)
