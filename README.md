@@ -58,9 +58,9 @@ The one click deploy template creates a Container Instance, Azure Web App and al
 
 
 
-   The final fields for Username and Password will need to be filled in. These details won't be needed for general AppM usage but may be needed when troubleshooting connectivity issues between AppM and Guest VM's. Please store these details securely should you need them in the future.
+    The final fields for Username and Password will need to be filled in. These details won't be needed for general AppM usage but may be needed when troubleshooting connectivity issues between AppM and Guest VM's. Please store these details securely should you need them in the future.
 
-   ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/119e0081-a39a-49b6-99ab-9b92e03a9430)
+    ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/119e0081-a39a-49b6-99ab-9b92e03a9430)
 
 5. Apache Guacamole
 
@@ -82,15 +82,15 @@ The one click deploy template creates a Container Instance, Azure Web App and al
 
 7. Once created please ensure that the Guacamole IP within your AppM Desktop Gateway Integration is correct. This can be found by checking the Guacamole container and noting it's IP.
 
-   ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/885df0f7-ea02-4c45-83b2-7a850abca71c)
+    ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/885df0f7-ea02-4c45-83b2-7a850abca71c)
 
-   Then from within the main AppM application under System > Integrations > Desktop Gateways please update with correct IP and test connectivity. This should come back as successful. If you had to make a change to this then a new hex encryption key will be generated.
+    Then from within the main AppM application under System > Integrations > Desktop Gateways please update with correct IP and test connectivity. This should come back as successful. If you had to make a change to this then a new hex encryption key will be generated.
 
-   ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/726d7c4a-7e31-43cd-b367-86a3383aeb8f)
+    ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/726d7c4a-7e31-43cd-b367-86a3383aeb8f)
 
-   If you need to change your Encryption Hex key or login details then these can be updated from the Configuration section of of your Web App.
+    If you need to change your Encryption Hex key or login details then these can be updated from the Configuration section of of your Web App.
 
-   ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/440a494f-5047-40e9-b489-7ce7f691f760)
+    ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/440a494f-5047-40e9-b489-7ce7f691f760)
 
 
 
