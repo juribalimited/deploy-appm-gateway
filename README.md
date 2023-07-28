@@ -50,7 +50,7 @@ The one click deploy template creates a Container Instance, Azure Web App and al
 
     The Encryption Key can be obtained from the main AppM application under System > Integrations > Desktop Gateways.
 
-    Enter the details that you know here and then click update, You wil not be able to test connection at this point as we have not completed the desktop gateway deployment. Once you have clicked update
+    Enter the details that you know here and then click update. You will need to append the address with "/vnc/tunnel". So if your Gateway WebApp address is mygatewaywebapp.azurewebsites.net then you will need to enter **mygatewaywebapp.azurewebsites.net/vnc/tunnel**. You wil not be able to test connection at this point as we have not completed the desktop gateway deployment. Once you have clicked update
     an encryption hex key will be created for you. Please enter this into the Encryption key fields.
 
     ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/fd095519-53f0-4c81-a56b-366f8dbb9028)
