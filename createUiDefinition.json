@@ -59,20 +59,7 @@
                                             "minAddressCount": 12,
                                             "requireContiguousAddresses": true
                                         }
-                                    },
-                                    "guacamoleSubnetName": {
-                                        "label": "Guacamole subnet",
-                                        "defaultValue": {
-                                            "name": "guacamole-snet",
-                                            "addressPrefixSize": "/26"
-                                        },
-                                        "constraints": {
-                                            "minAddressPrefixSize": "/26",
-                                            "minAddressCount": 8,
-                                            "requireContiguousAddresses": true
-                                        }
                                     }
-
                                 },
                                 "visible": true
                             }
@@ -90,18 +77,6 @@
                                 "label": "Gateway subnet NSG name",
                                 "toolTip": "",
                                 "defaultValue": "gateway-snet-nsg",
-                                "constraints": {
-                                    "required": true,
-                                    "regex": "^[a-z0-9A-Z-]{3,40}$",
-                                    "validationMessage": "The security group name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."
-                                }
-                            },
-                            {
-                                "name": "guacamoleSubnetNSGName",
-                                "type": "Microsoft.Common.TextBox",
-                                "label": "Guacamole subnet NSG name",
-                                "toolTip": "",
-                                "defaultValue": "guacamole-snet-nsg",
                                 "constraints": {
                                     "required": true,
                                     "regex": "^[a-z0-9A-Z-]{3,40}$",
@@ -281,24 +256,6 @@
                         "visible": true
                     }
                 ]
-            },
-            {
-                "name": "guacamoleConfig",
-                "label": "Apache Guacamole",
-                "elements": [
-                    {
-                        "name": "guacamoleInstanceName",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Container instance name",
-                        "toolTip": "",
-                        "defaultValue": "guacamole-ci",
-                        "constraints": {
-                            "required": true,
-                            "regex": "^[a-z0-9A-Z-]{3,40}$",
-                            "validationMessage": "The instance name must be between 3 and 40 characters long and contain letters, numbers and hyphens only."
-                        }
-                    }
-                ]
             }
         ],
         "outputs": {
@@ -307,19 +264,15 @@
             "virtualNetworkAddressPrefixes": "[steps('networkingConfig').networkSection.vnet.addressPrefixes]",
             "gatewaySubnetName": "[steps('networkingConfig').networkSection.vnet.subnets.gatewaySubnetName.name]",
             "gatewaySubnetAddressPrefix": "[steps('networkingConfig').networkSection.vnet.subnets.gatewaySubnetName.addressPrefix]",
-            "guacamoleSubnetName": "[steps('networkingConfig').networkSection.vnet.subnets.guacamoleSubnetName.name]",
-            "guacamoleSubnetAddressPrefix": "[steps('networkingConfig').networkSection.vnet.subnets.guacamoleSubnetName.addressPrefix]",
             "guestSubnetName": "[steps('networkingConfig').networkSection.vnet.subnets.guestSubnetName.name]",
             "guestSubnetAddressPrefix": "[steps('networkingConfig').networkSection.vnet.subnets.guestSubnetName.addressPrefix]",
             "gatewaySubnetNSGName": "[steps('networkingConfig').nsgSection.gatewaySubnetNSGName]",
-            "guacamoleSubnetNSGName": "[steps('networkingConfig').nsgSection.guacamoleSubnetNSGName]",
             "gatewayWebAppName": "[steps('gatewayConfig').containerSection.gatewayWebAppName]",
             "appmWebsiteAddress": "[steps('gatewayConfig').containerSection.appmWebsiteAddress]",
             "gatewayImageName": "[steps('gatewayConfig').containerSection.gatewayImageName]",
             "gatewayEncryptionKey": "[steps('gatewayConfig').encryptionSection.gatewayEncryptionKey]",
             "diagnosticUsername": "[steps('gatewayConfig').diagnosticSection.diagnosticUsername]",
-            "diagnosticPassword": "[steps('gatewayConfig').diagnosticSection.diagnosticPassword]",
-            "guacamoleInstanceName": "[steps('guacamoleConfig').guacamoleInstanceName]"
+            "diagnosticPassword": "[steps('gatewayConfig').diagnosticSection.diagnosticPassword]"
         }
     }
 }
