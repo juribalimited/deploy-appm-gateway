@@ -3,6 +3,7 @@
 Juriba offer a one click deploy template to create the desktop gateway infrastructure for use with AppM. The desktop gateway is used to facilitate access between the main AppM application and guest VM's by creating a set of resources which allows communication to Guest VM's on a private subnet.
 The one click deploy template creates a Container Instance, Azure Web App and all associated networking infrastructure to setup connectivity quickly and easily. However customers are **not required** to use the one click deploy template. If they want to consume the container images individually leveraging a different container engine/runtime the images can be pulled from here:
  - [AppM Gateway](https://hub.docker.com/r/juriba/appmgateway)
+   - Note that later versions of this image include guacamole-server (GUACD), use 127.0.0.1 within the AppM configuration.
  - [Guacd](https://hub.docker.com/r/guacamole/guacd)
 
 
@@ -28,7 +29,7 @@ The one click deploy template creates a Container Instance, Azure Web App and al
 
 3. Networking
 
-    The networking tab allows you to select an existing network or **create a new virtual network**. By default a new virtual network and subnets are created, however using the drop down menu you can select an existing network held within your Azure subscription. The virtual network requires three subnets for gateway resources, guest virtual machines and the guacamole container. You can also amend the Network Security Group names on this page if required.
+    The networking tab allows you to select an existing network or **create a new virtual network**. By default a new virtual network and subnets are created, however using the drop down menu you can select an existing network held within your Azure subscription. The virtual network requires two subnets, one for gateway webapp and one guest virtual machines. You can also amend the Network Security Group names on this page if required.
     * Juriba **suggests** creating a new network as the subnet settings <u>**will overwrite**</u> any existing subnets held within the network selected.
     ```diff
     - Any subnets on an existing network will be removed!
@@ -62,13 +63,7 @@ The one click deploy template creates a Container Instance, Azure Web App and al
 
     ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/119e0081-a39a-49b6-99ab-9b92e03a9430)
 
-5. Apache Guacamole
-
-    The fourth panel enables you to set a name for the Guacamole container instance.
-
-    ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/aa546a13-5193-4bf2-984d-cd4eb513df6e)
-
-6. Review and create
+5. Review and create
 
     Once all details have been entered then click Review+create to deploy all objects.
 
@@ -80,11 +75,9 @@ The one click deploy template creates a Container Instance, Azure Web App and al
 
     ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/635db2dd-bc96-4807-8dd1-2f71e583afe6)
 
-7. Once created please ensure that the Guacamole IP within your AppM Desktop Gateway Integration is correct. This can be found by checking the Guacamole container and noting it's IP.
+6. Retrospectively update the encryption key
 
-    ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/885df0f7-ea02-4c45-83b2-7a850abca71c)
-
-    Then from within the main AppM application under System > Integrations > Desktop Gateways please update with correct IP and test connectivity. This should come back as successful. If you had to make a change to this then a new hex encryption key will be generated.
+    Within the main AppM application under System > Integrations > Desktop Gateways please update with correct IP and test connectivity, **if you are using the latest gateway container this ip can be set to `127.0.0.1`**. This should come back as successful. If you had to make a change to this then a new hex encryption key will be generated, be sure to update your gateway with this encryption key!
 
     ![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/726d7c4a-7e31-43cd-b367-86a3383aeb8f)
 
