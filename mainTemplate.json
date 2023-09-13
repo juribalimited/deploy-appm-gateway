@@ -134,7 +134,6 @@
         }
     },
     "variables": {
-        "containerSubnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('guacamoleSubnetName'))]",
         "gatewaySubnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('gatewaySubnetName'))]",
         "appServicePlanName": "[concat(parameters('gatewayWebAppName'), '-asp')]"
     },
@@ -154,23 +153,6 @@
                     "addressPrefixes": "[parameters('virtualNetworkAddressPrefixes')]"
                 },
                 "subnets": [
-                    {
-                        "name": "[parameters('guacamoleSubnetName')]",
-                        "properties": {
-                            "addressPrefix": "[parameters('guacamoleSubnetAddressPrefix')]",
-                            "networkSecurityGroup": {
-                              "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('guacamoleSubnetNSGName'))]"
-                            },
-                        "delegations": [
-                          {
-                            "name": "container",
-                            "properties": {
-                              "serviceName": "Microsoft.ContainerInstance/containerGroups"
-                            }
-                          }
-                        ]
-                        }
-                    },
                     {
                       "name": "[parameters('gatewaySubnetName')]",
                       "properties": {
@@ -206,15 +188,15 @@
           "properties": {
               "securityRules": [
                   {
-                      "name": "GUACD_Outbound",
-                      "id": "[resourceId('Microsoft.Network/networkSecurityGroups/securityRules', parameters('gatewaySubnetNSGName'), 'GUACD_Outbound')]",
+                      "name": "Gateway_Outbound",
+                      "id": "[resourceId('Microsoft.Network/networkSecurityGroups/securityRules', parameters('gatewaySubnetNSGName'), 'Gateway_Outbound')]",
                       "type": "Microsoft.Network/networkSecurityGroups/securityRules",
                       "properties": {
                           "protocol": "*",
                           "sourcePortRange": "*",
-                          "destinationPortRange": "4822",
+                          "destinationPortRange": "5901",
                           "sourceAddressPrefix": "*",
-                          "destinationAddressPrefix": "[parameters('guacamoleSubnetAddressPrefix')]",
+                          "destinationAddressPrefix": "[parameters('guestSubnetAddressPrefix')]",
                           "access": "Allow",
                           "priority": 100,
                           "direction": "Outbound",
@@ -245,37 +227,6 @@
                   }
               ]
           }
-        },
-
-        {
-          "type": "Microsoft.Network/networkSecurityGroups",
-          "apiVersion": "2022-09-01",
-          "name": "[parameters('guacamoleSubnetNSGName')]",
-          "location": "[ResourceGroup().location]",
-          "dependsOn": [],
-          "properties": {
-            "securityRules": [
-                {
-                    "name": "guacdInbound",
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups/securityRules', parameters('guacamoleSubnetNSGName'), 'guacdInbound')]",
-                    "type": "Microsoft.Network/networkSecurityGroups/securityRules",
-                    "properties": {
-                        "protocol": "*",
-                        "sourcePortRange": "*",
-                        "destinationPortRange": "4822",
-                        "sourceAddressPrefix": "[parameters('gatewaySubnetAddressPrefix')]",
-                        "destinationAddressPrefix": "[parameters('guacamoleSubnetAddressPrefix')]",
-                        "access": "Allow",
-                        "priority": 110,
-                        "direction": "Inbound",
-                        "sourcePortRanges": [],
-                        "destinationPortRanges": [],
-                        "sourceAddressPrefixes": [],
-                        "destinationAddressPrefixes": []
-                    }
-                }
-            ]
-        }
         },
         {
           "type": "Microsoft.Web/serverfarms",
@@ -342,60 +293,9 @@
           "identity": {
             "type": "SystemAssigned"
           }
-        },
-        {
-            "type": "Microsoft.ContainerInstance/containerGroups",
-            "apiVersion": "2022-09-01",
-            "name": "[parameters('guacamoleInstanceName')]",
-            "location": "[ResourceGroup().location]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
-            ],
-            "properties": {
-              "containers": [
-                {
-                  "name": "guacamole",
-                  "properties": {
-                    "image": "guacamole/guacd:1.4.0",
-                    "ports": [
-                      {
-                        "port": 4822,
-                        "protocol": "TCP"
-                      }
-                    ],
-                    "resources": {
-                      "requests": {
-                        "cpu": 1,
-                        "memoryInGB": 1.5
-                      }
-                    }
-                  }
-                }
-              ],
-              "osType": "Linux",
-              "subnetIds": [
-                {
-                  "id": "[variables('containerSubnetRef')]"
-                }
-              ],
-              "restartPolicy": "Always",
-              "ipAddress": {
-                "type": "Private",
-                "ports": [
-                  {
-                    "port": 4822,
-                    "protocol": "TCP"
-                  }
-                ]
-              }
-            }
-          }
+        }
     ],
     "outputs": {
-        "containerIPv4Address": {
-          "type": "string",
-          "value": "[reference(resourceId('Microsoft.ContainerInstance/containerGroups', parameters('guacamoleInstanceName'))).ipAddress.ip]"
-        },
         "siteAddress": {
           "type": "array",
           "value": "[reference(resourceId('Microsoft.Web/sites', parameters('gatewayWebAppName'))).HostNames]"
