@@ -29,20 +29,6 @@
             "description": "Defines the IP range of your virtual network. This should be in CIDR notation, for example 10.0.0.0/22"
           }
         },
-        "guacamoleSubnetName": {
-            "type": "string",
-            "defaultValue": "guacamole-snet",
-            "metadata": {
-              "description": "Defines the name of the virtual network subnet where the guacamole container will be located"
-            }
-        },
-        "guacamoleSubnetAddressPrefix": {
-            "type": "string",
-            "defaultValue": "10.0.1.0/24",
-            "metadata": {
-              "description": "Defines the network address subnet which gateway container will be attached to. This should be in CIDR notation, for example 10.0.1.0/24"
-            }
-        },
         "gatewaySubnetName": {
           "type": "string",
           "defaultValue": "gateway-snet",
@@ -71,13 +57,6 @@
             "description": "Defines the network address subnet where the guest VM's will reside. This should be in CIDR notation, for example 10.0.3.0/24"
           }
         },
-        "guacamoleInstanceName": {
-            "type": "string",
-            "defaultValue": "guacamole-ci",
-            "metadata": {
-              "description": "Defines the name for Guacamole gateway container"
-            }
-        },
         "gatewayWebAppName": {
           "type": "string",
           "defaultValue": "appm-gateway",
@@ -90,14 +69,6 @@
           "defaultValue": "gateway-snet-nsg",
           "metadata": {
             "description": "Defines the name for network security group used for Gateway WebApp"
-          }
-        },
-
-        "guacamoleSubnetNSGName": {
-          "type": "string",
-          "defaultValue": "guacamole-snet-nsg",
-          "metadata": {
-            "description": "Defines the name for network security group used for Container"
           }
         },
         "appmWebsiteAddress": {
@@ -144,8 +115,7 @@
             "name": "[parameters('virtualNetworkName')]",
             "location": "[ResourceGroup().location]",
             "dependsOn": [
-              "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('gatewaySubnetNSGName'))]",
-              "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('guacamoleSubnetNSGName'))]"
+              "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('gatewaySubnetNSGName'))]"
             ],
             "tags": {},
             "properties": {
