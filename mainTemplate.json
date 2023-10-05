@@ -80,21 +80,9 @@
 
         "gatewayImageName": {
           "type": "string",
-          "defaultValue": "sha-d9174c1",
+          "defaultValue": "latest",
           "metadata": {
             "description": "Defines the image to be used for Gateway container. This will default to latest available. Full list can be found here https://hub.docker.com/repository/docker/juriba/appmgateway/general"
-          }
-        },
-        "diagnosticUsername": {
-          "type": "string",
-          "metadata": {
-            "description": "Value from AppM application to be used in Gateway container."
-          }
-        },
-        "diagnosticPassword": {
-          "type": "securestring",
-          "metadata": {
-            "description": "Value from AppM application to be used in Gateway container."
           }
         },
         "gatewayEncryptionKey": {
@@ -244,14 +232,6 @@
                 {
                   "name": "WEBSITES_ENABLE_APP_SERVICE_STORAGE",
                   "value": "false"
-                },
-                {
-                  "name": "APPM_USERNAME",
-                  "value": "[parameters('diagnosticUsername')]"
-                },
-                {
-                  "name": "APPM_PASSWORD",
-                  "value": "[parameters('diagnosticPassword')]"
                 },
                 {
                   "name": "APPM_HEXKEY",

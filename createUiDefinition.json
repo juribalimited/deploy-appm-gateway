@@ -211,49 +211,6 @@
                             }
                         ],
                         "visible": true
-                    },
-                    {
-                        "name": "diagnosticSection",
-                        "type": "Microsoft.Common.Section",
-                        "label": "Diagnostic settings",
-                        "elements": [
-                            {
-                                "name": "gatewayDiagnosticInfo",
-                                "type": "Microsoft.Common.InfoBox",
-                                "visible": true,
-                                "options": {
-                                  "icon": "Info",
-                                  "text": "AppM Desktop Gateway has a troubleshooting tool, the credentials provided will be used to secure access to it.",
-                                  "uri": "https://docs.juriba.com/appm/next"
-                                }
-                            },
-                            {
-                                "name": "diagnosticUsername",
-                                "type": "Microsoft.Common.TextBox",
-                                "label": "Username",
-                                "toolTip": "",
-                                "constraints": {
-                                    "required": true,
-                                    "regex": "^[a-z0-9A-Z]{3,15}$",
-                                    "validationMessage": "The username must be between 3 and 15 characters long and contain letters and numbers only."
-                                }
-                            },
-                            {
-                                "name": "diagnosticPassword",
-                                "type": "Microsoft.Common.PasswordBox",
-                                "label": {
-                                    "password": "Password",
-                                    "confirmPassword": "Confirm password"
-                                },
-                                "toolTip": "",
-                                "constraints": {
-                                    "required": true,
-                                    "regex": "^[a-z0-9A-Z]{3,30}$",
-                                    "validationMessage": "The password must be between 3 and 30 characters long and contain letters and numbers only."
-                                }
-                            }
-                        ],
-                        "visible": true
                     }
                 ]
             }
