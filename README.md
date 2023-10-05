@@ -8,7 +8,7 @@ The one click deploy template creates a Container Instance, Azure Web App and al
 
 
 ## Gateway infrastructure
-![image](https://github.com/juribalimited/deploy-appm-gateway/assets/109281915/26cba5f0-a867-4fe1-83d4-19ac0a109d30)
+![image](https://github.com/juribalimited/deploy-appm-gateway/assets/107043338/5d59df20-1c62-4763-b27e-dea7de0a6d75)
 
 ## Usage
 
