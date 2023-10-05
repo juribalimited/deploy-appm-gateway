@@ -227,9 +227,7 @@
             "gatewayWebAppName": "[steps('gatewayConfig').containerSection.gatewayWebAppName]",
             "appmWebsiteAddress": "[steps('gatewayConfig').containerSection.appmWebsiteAddress]",
             "gatewayImageName": "[steps('gatewayConfig').containerSection.gatewayImageName]",
-            "gatewayEncryptionKey": "[steps('gatewayConfig').encryptionSection.gatewayEncryptionKey]",
-            "diagnosticUsername": "[steps('gatewayConfig').diagnosticSection.diagnosticUsername]",
-            "diagnosticPassword": "[steps('gatewayConfig').diagnosticSection.diagnosticPassword]"
+            "gatewayEncryptionKey": "[steps('gatewayConfig').encryptionSection.gatewayEncryptionKey]"
         }
     }
 }
