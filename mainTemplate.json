@@ -146,20 +146,39 @@
           "properties": {
               "securityRules": [
                   {
-                      "name": "Gateway_Outbound",
+                      "name": "Gateway_Outbound_VNC",
                       "id": "[resourceId('Microsoft.Network/networkSecurityGroups/securityRules', parameters('gatewaySubnetNSGName'), 'Gateway_Outbound')]",
                       "type": "Microsoft.Network/networkSecurityGroups/securityRules",
                       "properties": {
                           "protocol": "*",
                           "sourcePortRange": "*",
-                          "destinationPortRange":"",
-                          "sourceAddressPrefix": "*",
+                          "destinationPortRange": "5901",
+                          "sourceAddressPrefix": "[parameters('gatewaySubnetAddressPrefix')]",
                           "destinationAddressPrefix": "[parameters('guestSubnetAddressPrefix')]",
                           "access": "Allow",
                           "priority": 100,
                           "direction": "Outbound",
                           "sourcePortRanges": [],
-                          "destinationPortRanges": ["5901", "3389"],
+                          "destinationPortRanges": [],
+                          "sourceAddressPrefixes": [],
+                          "destinationAddressPrefixes": []
+                      }
+                  },
+                  {
+                      "name": "Gateway_Outbound_RDP",
+                      "id": "[resourceId('Microsoft.Network/networkSecurityGroups/securityRules', parameters('gatewaySubnetNSGName'), 'Gateway_Outbound')]",
+                      "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+                      "properties": {
+                          "protocol": "Tcp",
+                          "sourcePortRange": "*",
+                          "destinationPortRange": "3389",
+                          "sourceAddressPrefix": "[parameters('gatewaySubnetAddressPrefix')]",
+                          "destinationAddressPrefix": "[parameters('guestSubnetAddressPrefix')]",
+                          "access": "Allow",
+                          "priority": 101,
+                          "direction": "Outbound",
+                          "sourcePortRanges": [],
+                          "destinationPortRanges": [],
                           "sourceAddressPrefixes": [],
                           "destinationAddressPrefixes": []
                       }
