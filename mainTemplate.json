@@ -152,14 +152,14 @@
                       "properties": {
                           "protocol": "*",
                           "sourcePortRange": "*",
-                          "destinationPortRange": ["5901", "3389"],
+                          "destinationPortRange":"",
                           "sourceAddressPrefix": "*",
                           "destinationAddressPrefix": "[parameters('guestSubnetAddressPrefix')]",
                           "access": "Allow",
                           "priority": 100,
                           "direction": "Outbound",
                           "sourcePortRanges": [],
-                          "destinationPortRanges": [],
+                          "destinationPortRanges": ["5901", "3389"],
                           "sourceAddressPrefixes": [],
                           "destinationAddressPrefixes": []
                       }
