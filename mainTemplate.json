@@ -152,7 +152,7 @@
                       "properties": {
                           "protocol": "*",
                           "sourcePortRange": "*",
-                          "destinationPortRange": "5901,3389",
+                          "destinationPortRange": ["5901", "3389"],
                           "sourceAddressPrefix": "*",
                           "destinationAddressPrefix": "[parameters('guestSubnetAddressPrefix')]",
                           "access": "Allow",
